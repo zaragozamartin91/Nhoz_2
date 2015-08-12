@@ -10,7 +10,7 @@ import dummy.Dummy;
 import junit.framework.TestCase;
 
 public class ValueParserTest extends TestCase {
-	ValueParser vp = new ValueParser();
+	ValueSerializer vp = new ValueSerializer();
 
 	public void testParse() {
 		Object rawVal;
@@ -50,11 +50,22 @@ public class ValueParserTest extends TestCase {
 			fail();
 		}
 
+		/*si al value parser se le pasa una instancia de value, devuelve la misma instancia.*/
+		rawVal = new StringValue("some value");
+		try {
+			Value val = vp.parse(rawVal);
+			assertEquals(val, rawVal);
+		} catch (ValueParserException e) {
+			e.printStackTrace();
+			fail();
+		}
+
 		rawVal = new Dummy("hello", 123);
 		try {
 			vp.parse(rawVal);
 			fail();
 		} catch (ValueParserException e) {
 		}
+
 	}
 }// ValueParserTest

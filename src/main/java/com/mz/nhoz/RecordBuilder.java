@@ -11,7 +11,7 @@ import nl.knaw.dans.common.dbflib.Record;
 import nl.knaw.dans.common.dbflib.Value;
 
 /**
- * Creador de Registros {@link nl.knaw.dans.common.dbflib.Record}.
+ * Creador de Registros de tipo {@link nl.knaw.dans.common.dbflib.Record}.
  * 
  * Ejemplo de uso: <br/>
  * <code>Record r = new RecordBuilder().put("nombre","martin").put("edad",25).get();</code>
@@ -21,7 +21,7 @@ import nl.knaw.dans.common.dbflib.Value;
  */
 public class RecordBuilder {
 	private Map<String, Value> valueMap = new HashMap<String, Value>();
-	private static final ValueParser VALUE_PARSER = new ValueParser();
+	private static final ValueSerializer VALUE_PARSER = new ValueSerializer();
 
 	/**
 	 * Crea un constructor de registros vacio.

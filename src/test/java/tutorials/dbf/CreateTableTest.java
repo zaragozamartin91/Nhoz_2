@@ -31,7 +31,6 @@ public class CreateTableTest extends TestCase {
 	public static final String DBF_FILE_PATH = DIR + "/" + TABLE_NAME;
 	
 	
-	
 	/**
 	 * Create the test case
 	 *

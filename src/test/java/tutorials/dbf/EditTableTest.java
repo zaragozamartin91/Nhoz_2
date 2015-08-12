@@ -80,7 +80,6 @@ public class EditTableTest extends TestCase {
 
 			Record record = new Record(valueMap);
 			personTable.updateRecordAt(recordEditIndex, record);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
