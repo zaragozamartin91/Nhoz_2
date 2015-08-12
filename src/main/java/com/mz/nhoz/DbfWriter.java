@@ -48,10 +48,10 @@ public class DbfWriter {
 	 * @throws DbfWriterException
 	 */
 	public Record addRecord(Map<String, Object> valueMap) throws DbfWriterException {
-		Record record;
-		RecordBuilder rb = new RecordBuilder();
-
 		try {
+			Record record;
+			RecordBuilder rb = new RecordBuilder();
+
 			Set<String> keySet = valueMap.keySet();
 
 			for (String key : keySet) {
@@ -62,12 +62,46 @@ public class DbfWriter {
 			record = rb.get();
 
 			table.addRecord(record);
+
+			return record;
 		} catch (Exception e) {
 			throw new DbfWriterException(e);
 		}
-
-		return record;
 	}// addRecord
+
+	/**
+	 * Actualiza un registro.
+	 * 
+	 * @param valueMap
+	 *            - valueMap - Mapa clave valor que representa al registro a
+	 *            actualizar.
+	 * @param index
+	 *            - indice de registro.
+	 * @return Registro actualizado.
+	 * @throws DbfWriterException
+	 */
+	public Record updateRecord(Map<String, Object> valueMap, int index) throws DbfWriterException {
+		try {
+			Record protoRecord = table.getRecordAt(index);
+
+			RecordBuilder rb = new RecordBuilder(protoRecord);
+
+			Set<String> keySet = valueMap.keySet();
+
+			for (String key : keySet) {
+				Object value = valueMap.get(key);
+				rb.put(key, value);
+			}
+
+			Record record = rb.get();
+
+			table.updateRecordAt(index, record);
+
+			return record;
+		} catch (Exception e) {
+			throw new DbfWriterException(e);
+		}
+	}
 
 	/**
 	 * Retorna la cantidad de registros en la tabla INCLUYENDO aquellos marcados

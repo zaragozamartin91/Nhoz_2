@@ -1,14 +1,15 @@
 package com.mz.nhoz;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.mz.nhoz.exception.RecordBuilderException;
-import com.mz.nhoz.exception.ValueParserException;
-
 import nl.knaw.dans.common.dbflib.Record;
 import nl.knaw.dans.common.dbflib.Value;
+
+import com.mz.nhoz.exception.RecordBuilderException;
+import com.mz.nhoz.exception.ValueParserException;
+import com.mz.nhoz.util.RecordUtils;
+import com.mz.nhoz.util.exception.RecordUtilsException;
 
 /**
  * Creador de Registros de tipo {@link nl.knaw.dans.common.dbflib.Record}.
@@ -38,26 +39,11 @@ public class RecordBuilder {
 	 * @throws RecordBuilderException
 	 */
 	public RecordBuilder(Record protoRecord) throws RecordBuilderException {
-		Class<? extends Record> recordClass = protoRecord.getClass();
-		Field[] declaredFields = recordClass.getDeclaredFields();
-
-		for (Field field : declaredFields) {
-			String name = field.getName();
-			if (name.contentEquals("valueMap")) {
-
-				boolean accessible = field.isAccessible();
-				field.setAccessible(true);
-				try {
-					Object object = field.get(protoRecord);
-					Map<String, Value> vm = (Map<String, Value>) object;
-					valueMap = new HashMap<String, Value>(vm);
-				} catch (Exception e) {
-					throw new RecordBuilderException(e);
-				}
-
-				field.setAccessible(accessible);
-				break;
-			}
+		try {
+			Map<String, Value> valueMap__ = RecordUtils.getValueMap(protoRecord);
+			valueMap = new HashMap<String, Value>(valueMap__ );
+		} catch (RecordUtilsException e) {
+			throw new RecordBuilderException(e);
 		}
 	}// cons
 

@@ -9,7 +9,7 @@ import com.mz.nhoz.exception.ValueParserException;
 import dummy.Dummy;
 import junit.framework.TestCase;
 
-public class ValueParserTest extends TestCase {
+public class ValueSerializerTest extends TestCase {
 	ValueSerializer vp = new ValueSerializer();
 
 	public void testParse() {
