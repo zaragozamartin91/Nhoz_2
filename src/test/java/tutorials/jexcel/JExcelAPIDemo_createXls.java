@@ -18,7 +18,7 @@ import jxl.write.WriteException;
 public class JExcelAPIDemo_createXls {
 	public static void main(String[] args) throws BiffException, IOException, WriteException {
 		WritableWorkbook wworkbook;
-		wworkbook = Workbook.createWorkbook(new File("output.xls"));
+		wworkbook = Workbook.createWorkbook(new File("testFiles/output.xls"));
 		WritableSheet wsheet = wworkbook.createSheet("First Sheet", 0);
 		Label label = new Label(0, 2, "A label record");
 		wsheet.addCell(label);

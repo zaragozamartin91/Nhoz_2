@@ -9,7 +9,7 @@ import nl.knaw.dans.common.dbflib.Value;
 import com.mz.nhoz.dbf.exception.RecordBuilderException;
 import com.mz.nhoz.dbf.exception.ValueParserException;
 import com.mz.nhoz.dbf.util.RecordUtils;
-import com.mz.nhoz.util.exception.RecordUtilsException;
+import com.mz.nhoz.dbf.util.exception.RecordUtilsException;
 
 /**
  * Creador de Registros de tipo {@link nl.knaw.dans.common.dbflib.Record}.
@@ -41,7 +41,7 @@ public class RecordBuilder {
 	public RecordBuilder(Record protoRecord) throws RecordBuilderException {
 		try {
 			Map<String, Value> valueMap__ = RecordUtils.getValueMap(protoRecord);
-			valueMap = new HashMap<String, Value>(valueMap__ );
+			this.valueMap = new HashMap<String, Value>(valueMap__ );
 		} catch (RecordUtilsException e) {
 			throw new RecordBuilderException(e);
 		}

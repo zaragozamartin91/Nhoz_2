@@ -1,4 +1,4 @@
-package com.mz.nhoz.util.exception;
+package com.mz.nhoz.dbf.util.exception;
 
 public class RecordUtilsException extends Exception {
 

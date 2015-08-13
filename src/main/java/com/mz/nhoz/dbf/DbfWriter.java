@@ -131,6 +131,11 @@ public class DbfWriter {
 		}
 	}
 
+	public Record deleteLastRecord() throws DbfWriterException {
+		int index = getRecordCount() - 1;
+		return this.deleteRecord(index);
+	}
+
 	/**
 	 * Elimina registros marcados como "borrados".
 	 * 
