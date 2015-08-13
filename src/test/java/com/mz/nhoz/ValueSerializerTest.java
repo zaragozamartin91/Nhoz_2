@@ -4,7 +4,8 @@ import nl.knaw.dans.common.dbflib.NumberValue;
 import nl.knaw.dans.common.dbflib.StringValue;
 import nl.knaw.dans.common.dbflib.Value;
 
-import com.mz.nhoz.exception.ValueParserException;
+import com.mz.nhoz.dbf.ValueSerializer;
+import com.mz.nhoz.dbf.exception.ValueParserException;
 
 import dummy.Dummy;
 import junit.framework.TestCase;

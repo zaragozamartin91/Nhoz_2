@@ -1,10 +1,10 @@
-package com.mz.nhoz.util;
+package com.mz.nhoz.dbf.util;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.mz.nhoz.exception.RecordBuilderException;
+import com.mz.nhoz.dbf.exception.RecordBuilderException;
 import com.mz.nhoz.util.exception.RecordUtilsException;
 
 import nl.knaw.dans.common.dbflib.Record;

@@ -1,4 +1,4 @@
-package com.mz.nhoz;
+package com.mz.nhoz.dbf;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,9 +6,9 @@ import java.util.Map;
 import nl.knaw.dans.common.dbflib.Record;
 import nl.knaw.dans.common.dbflib.Value;
 
-import com.mz.nhoz.exception.RecordBuilderException;
-import com.mz.nhoz.exception.ValueParserException;
-import com.mz.nhoz.util.RecordUtils;
+import com.mz.nhoz.dbf.exception.RecordBuilderException;
+import com.mz.nhoz.dbf.exception.ValueParserException;
+import com.mz.nhoz.dbf.util.RecordUtils;
 import com.mz.nhoz.util.exception.RecordUtilsException;
 
 /**

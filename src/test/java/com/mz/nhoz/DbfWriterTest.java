@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.mz.nhoz.exception.DbfWriterException;
+import com.mz.nhoz.dbf.DbfWriter;
+import com.mz.nhoz.dbf.exception.DbfWriterException;
 
 import junit.framework.TestCase;
 
@@ -26,6 +27,8 @@ public class DbfWriterTest extends TestCase {
 
 		int recordCount = dbfWriter.getRecordCount();
 		assertEquals(5, recordCount);
+		
+		
 		
 		dbfWriter.deleteRecord(recordCount - 1);
 		dbfWriter.removeDeleted();

@@ -1,4 +1,4 @@
-package com.mz.nhoz;
+package com.mz.nhoz.dbf;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import nl.knaw.dans.common.dbflib.Record;
 import nl.knaw.dans.common.dbflib.Table;
 import nl.knaw.dans.common.dbflib.Version;
 
-import com.mz.nhoz.exception.DbfWriterException;
+import com.mz.nhoz.dbf.exception.DbfWriterException;
 
 /**
  * Editor de archivos Dbf.

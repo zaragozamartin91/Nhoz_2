@@ -2,7 +2,8 @@ package com.mz.nhoz;
 
 import nl.knaw.dans.common.dbflib.Record;
 
-import com.mz.nhoz.exception.RecordBuilderException;
+import com.mz.nhoz.dbf.RecordBuilder;
+import com.mz.nhoz.dbf.exception.RecordBuilderException;
 
 import junit.framework.TestCase;
 
