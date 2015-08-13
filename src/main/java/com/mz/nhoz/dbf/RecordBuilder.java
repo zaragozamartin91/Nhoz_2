@@ -2,6 +2,7 @@ package com.mz.nhoz.dbf;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import nl.knaw.dans.common.dbflib.Record;
 import nl.knaw.dans.common.dbflib.Value;
@@ -30,6 +31,17 @@ public class RecordBuilder {
 	public RecordBuilder() {
 		super();
 	}
+	
+	public RecordBuilder(Map<String, Object> values){
+		Set<String> keySet = values.keySet();
+		for (String key : keySet) {
+			Object value = values.get(key);
+			try {
+				this.put(key, value);
+			} catch (RecordBuilderException e) {
+			}
+		}
+	}//RecordBuilder
 
 	/**
 	 * Crea un constructor de registros a partir de un registro existente.
@@ -72,7 +84,7 @@ public class RecordBuilder {
 	 * 
 	 * @return nuevo registro a partir de los valores asignados.
 	 */
-	public Record get() {
+	public Record build() {
 		Record record = new Record(valueMap);
 		return record;
 	}// get

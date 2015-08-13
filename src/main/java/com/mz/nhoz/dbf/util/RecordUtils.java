@@ -62,7 +62,7 @@ public class RecordUtils {
 	 *         los valores son objetos java.
 	 * @throws RecordUtilsException
 	 */
-	public static Map<String, Object> deserializeRecord(Record record) throws RecordUtilsException {
+	public static Map<String, Object> deserialize(Record record) throws RecordUtilsException {
 		Map<String, Value> valueMap = getValueMap(record);
 		Set<String> keySet = valueMap.keySet();
 		Map<String, Object> deserializedValues = new HashMap<String, Object>();
@@ -90,8 +90,28 @@ public class RecordUtils {
 	 * @throws RecordUtilsException
 	 */
 	public static String toString(Record record) throws RecordUtilsException {
-		Map<String, Object> recordValues = deserializeRecord(record);
+		Map<String, Object> recordValues = deserialize(record);
 		Gson gson = new Gson();
 		return gson.toJson(recordValues);
+	}
+
+	/**
+	 * Compara dos registros y retorna true en caso que sus valores sean
+	 * iguales.
+	 * 
+	 * @param r1
+	 * @param r2
+	 * @return true en caso que sus valores sean iguales.
+	 * @throws RecordUtilsException
+	 */
+	public static boolean equals(Record r1, Record r2) throws RecordUtilsException {
+		if (r1.equals(r2)) {
+			return true;
+		}
+
+		Map<String, Object> mr1 = deserialize(r1);
+		Map<String, Object> mr2 = deserialize(r2);
+
+		return mr1.equals(mr2);
 	}
 }

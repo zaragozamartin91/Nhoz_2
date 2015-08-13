@@ -7,6 +7,7 @@ import java.util.Map;
 import nl.knaw.dans.common.dbflib.Record;
 
 import com.mz.nhoz.dbf.DbfWriter;
+import com.mz.nhoz.dbf.exception.DbfManagerException;
 import com.mz.nhoz.dbf.exception.DbfWriterException;
 import com.mz.nhoz.dbf.util.RecordUtils;
 import com.mz.nhoz.dbf.util.exception.RecordUtilsException;
@@ -17,7 +18,7 @@ public class DbfWriterTest extends TestCase {
 	String pathname = "testFiles/PERSON.DBF";
 	File dbaseFile = new File(pathname);
 
-	public void testAddRecord() throws DbfWriterException, RecordUtilsException {
+	public void testAddRecord() throws DbfWriterException, RecordUtilsException, DbfManagerException {
 		// ID NAME SALARY AGE
 		DbfWriter dbfWriter = new DbfWriter(dbaseFile);
 		dbfWriter.open();
@@ -32,7 +33,7 @@ public class DbfWriterTest extends TestCase {
 			valueMap.put("SALARY", 120.54);
 			valueMap.put("AGE", 25);
 			Record rec = dbfWriter.addRecord(valueMap);
-			System.out.println( RecordUtils.toString(rec) );
+			System.out.println(RecordUtils.toString(rec));
 			++recordCount;
 		}
 		{
@@ -48,9 +49,9 @@ public class DbfWriterTest extends TestCase {
 		assertEquals(recordCount, dbfWriter.getRecordCount());
 
 		dbfWriter.deleteLastRecord();
-		dbfWriter.removeDeleted();
+		dbfWriter.removeDeletedRecords();
 		dbfWriter.deleteLastRecord();
-		dbfWriter.removeDeleted();
+		dbfWriter.removeDeletedRecords();
 
 		assertEquals(initialRecordCount, dbfWriter.getRecordCount());
 
@@ -60,7 +61,7 @@ public class DbfWriterTest extends TestCase {
 	public void testUpdateRecord() {
 	}
 
-	public void testGetRecordCount() {
+	public void testGetRecordCount() throws DbfManagerException {
 		try {
 			DbfWriter dbfWriter = new DbfWriter(dbaseFile);
 
@@ -69,16 +70,22 @@ public class DbfWriterTest extends TestCase {
 			System.out.println("record count=" + dbfWriter.getRecordCount());
 
 			dbfWriter.close();
-		} catch (DbfWriterException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
 	}
 
 	public void testDeleteRecord() {
+		
 	}
 
-	public void testRemoveDeleted() {
-	}
 
+	public void testOpenSameTableTwice() throws DbfManagerException {
+		DbfWriter dbfWriter_1 = new DbfWriter(dbaseFile);
+		DbfWriter dbfWriter_2 = new DbfWriter(dbaseFile);
+
+		dbfWriter_1.close();
+		dbfWriter_2.close();
+	}
 }

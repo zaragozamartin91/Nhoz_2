@@ -1,14 +1,10 @@
 package com.mz.nhoz.dbf;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
-import nl.knaw.dans.common.dbflib.Database;
 import nl.knaw.dans.common.dbflib.Record;
-import nl.knaw.dans.common.dbflib.Table;
-import nl.knaw.dans.common.dbflib.Version;
 
 import com.mz.nhoz.dbf.exception.DbfWriterException;
 
@@ -18,25 +14,27 @@ import com.mz.nhoz.dbf.exception.DbfWriterException;
  * @author martin.zaragoza
  *
  */
-public class DbfWriter {
-	private Database database;
-	private Table table;
-
-	public DbfWriter(File dbaseFile) {
-		File parentFile = dbaseFile.getParentFile();
-		String tableName = dbaseFile.getName();
-
-		database = new Database(parentFile, Version.DBASE_3);
-		table = database.getTable(tableName);
+public class DbfWriter extends DbfManager {
+	public DbfWriter(File dbfFile) {
+		super(dbfFile);
 	}
 
-	public DbfWriter open() throws DbfWriterException {
+	public Record addRecord(Record record) throws DbfWriterException {
 		try {
-			table.open();
+			getTable().addRecord(record);
 		} catch (Exception e) {
 			throw new DbfWriterException(e);
 		}
-		return this;
+		return record;
+	}
+
+	public Record updateRecord(Record record, int index) throws DbfWriterException {
+		try {
+			getTable().updateRecordAt(index, record);
+		} catch (Exception e) {
+			throw new DbfWriterException(e);
+		}
+		return record;
 	}
 
 	/**
@@ -59,11 +57,9 @@ public class DbfWriter {
 				rb.put(key, value);
 			}
 
-			record = rb.get();
+			record = rb.build();
 
-			table.addRecord(record);
-
-			return record;
+			return this.addRecord(record);
 		} catch (Exception e) {
 			throw new DbfWriterException(e);
 		}
@@ -82,7 +78,7 @@ public class DbfWriter {
 	 */
 	public Record updateRecord(Map<String, Object> valueMap, int index) throws DbfWriterException {
 		try {
-			Record protoRecord = table.getRecordAt(index);
+			Record protoRecord = getTable().getRecordAt(index);
 
 			RecordBuilder rb = new RecordBuilder(protoRecord);
 
@@ -93,44 +89,37 @@ public class DbfWriter {
 				rb.put(key, value);
 			}
 
-			Record record = rb.get();
+			Record record = rb.build();
 
-			table.updateRecordAt(index, record);
-
-			return record;
+			return this.updateRecord(record, index);
 		} catch (Exception e) {
 			throw new DbfWriterException(e);
 		}
-	}
-
-	/**
-	 * Retorna la cantidad de registros en la tabla INCLUYENDO aquellos marcados
-	 * como borrados.
-	 * 
-	 * @return cantidad de registros en la tabla INCLUYENDO aquellos marcados
-	 *         como borrados.
-	 */
-	public int getRecordCount() {
-		return table.getRecordCount();
 	}
 
 	/**
 	 * Marca a un registro como "borrado".
 	 * 
-	 * @param index
-	 *            - Indice de registro a borrar.
+	 * @param recordIndex
+	 *            - Indice de registro a borrar inicia en 0.
 	 * @return registro marcado como borrado.
 	 * @throws DbfWriterException
 	 */
-	public Record deleteRecord(int index) throws DbfWriterException {
+	public Record deleteRecord(int recordIndex) throws DbfWriterException {
 		try {
-			table.deleteRecordAt(index);
-			return table.getRecordAt(index);
+			getTable().deleteRecordAt(recordIndex);
+			return getTable().getRecordAt(recordIndex);
 		} catch (Exception e) {
 			throw new DbfWriterException(e);
 		}
-	}
+	}// deleteRecord
 
+	/**
+	 * Marca al ultimo registro como borrado.
+	 * 
+	 * @return Registro borrado.
+	 * @throws DbfWriterException
+	 */
 	public Record deleteLastRecord() throws DbfWriterException {
 		int index = getRecordCount() - 1;
 		return this.deleteRecord(index);
@@ -142,24 +131,11 @@ public class DbfWriter {
 	 * @return this.
 	 * @throws DbfWriterException
 	 */
-	public DbfWriter removeDeleted() throws DbfWriterException {
+	public DbfWriter removeDeletedRecords() throws DbfWriterException {
 		try {
-			table.pack();
+			getTable().pack();
 			return this;
 		} catch (Exception e) {
-			throw new DbfWriterException(e);
-		}
-	}
-
-	/**
-	 * Cierra la tabla para marcar el fin de su uso.
-	 * 
-	 * @throws DbfWriterException
-	 */
-	public void close() throws DbfWriterException {
-		try {
-			table.close();
-		} catch (IOException e) {
 			throw new DbfWriterException(e);
 		}
 	}

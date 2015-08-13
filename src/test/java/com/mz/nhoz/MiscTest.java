@@ -2,7 +2,9 @@ package com.mz.nhoz;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -54,5 +56,23 @@ public class MiscTest extends TestCase {
 		Double d2 = new Double(4.25);
 
 		assertEquals(d1, d2);
+	}
+	
+	public void testCompareMapsUsingEquals(){
+		Map<String, Object> m1 = new HashMap<String, Object>();
+		Map<String, Object> m2 = new HashMap<String, Object>();
+		
+		m1.put( new String("key_1") , new String("value_1"));
+		m1.put( new String("key_2") , new Integer(2));
+		m1.put( new String("key_3") , new Double(3.321));
+		m1.put( new String("key_4") , new Float(4.654));
+		
+		
+		m2.put( new String("key_2") , new Integer(2));
+		m2.put( new String("key_4") , new Float(4.654));
+		m2.put( new String("key_3") , new Double(3.321));
+		m2.put( new String("key_1") , new String("value_1"));
+		
+		assertEquals(m1, m2);
 	}
 }
