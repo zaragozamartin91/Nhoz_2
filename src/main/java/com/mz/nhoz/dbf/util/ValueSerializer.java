@@ -1,4 +1,4 @@
-package com.mz.nhoz.dbf;
+package com.mz.nhoz.dbf.util;
 
 import java.util.Date;
 

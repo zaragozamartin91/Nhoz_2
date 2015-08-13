@@ -3,6 +3,8 @@ package dummy;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanMap;
+
 public class PersonRecord {
 	private Integer id;
 	private String name;
@@ -42,5 +44,7 @@ public class PersonRecord {
 		map.put("AGE", age);
 
 		return map;
+		
+//		return new BeanMap(this);
 	}
 };

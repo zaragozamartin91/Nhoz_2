@@ -10,6 +10,7 @@ import nl.knaw.dans.common.dbflib.Value;
 import com.mz.nhoz.dbf.exception.RecordBuilderException;
 import com.mz.nhoz.dbf.exception.ValueParserException;
 import com.mz.nhoz.dbf.util.RecordUtils;
+import com.mz.nhoz.dbf.util.ValueSerializer;
 import com.mz.nhoz.dbf.util.exception.RecordUtilsException;
 
 /**
