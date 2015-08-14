@@ -15,7 +15,7 @@ import com.mz.nhoz.dbf.util.exception.RecordUtilsException;
 import junit.framework.TestCase;
 
 public class DbfWriterTest extends TestCase {
-	String pathname = "testFiles/PERSON.DBF";
+	String pathname = "testFiles/DbfWriterTest.DBF";
 	File dbaseFile = new File(pathname);
 
 	public void testAddRecord() throws DbfWriterException, RecordUtilsException, DbfManagerException {

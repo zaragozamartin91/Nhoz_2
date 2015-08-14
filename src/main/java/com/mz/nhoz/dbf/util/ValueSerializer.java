@@ -2,7 +2,7 @@ package com.mz.nhoz.dbf.util;
 
 import java.util.Date;
 
-import com.mz.nhoz.dbf.exception.ValueParserException;
+import com.mz.nhoz.dbf.util.exception.ValueParserException;
 
 import nl.knaw.dans.common.dbflib.BooleanValue;
 import nl.knaw.dans.common.dbflib.DateValue;

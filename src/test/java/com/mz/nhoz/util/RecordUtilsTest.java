@@ -48,4 +48,22 @@ public class RecordUtilsTest extends TestCase {
 		
 		assertTrue( RecordUtils.equals(record_1, record_2) );
 	}
+	
+	public void testRecordEqualsSameRecord() throws RecordBuilderException, RecordUtilsException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", new String("martin"));
+		map.put("age", new Integer(25));
+		map.put("salary", new Double(1234.654));
+
+		RecordBuilder rb_1 = new RecordBuilder();
+		Set<String> keySet = map.keySet();
+		for (String key : keySet) {
+			rb_1.put(key, map.get(key));
+		}
+		Record record_1 = rb_1.build();
+		
+		Record record_2 = record_1;
+		
+		assertTrue( record_1.equals(record_2) && RecordUtils.equals(record_1, record_2) );
+	}
 }

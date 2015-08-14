@@ -1,9 +1,13 @@
 package com.mz.nhoz;
 
+import java.util.HashMap;
+
 import nl.knaw.dans.common.dbflib.Record;
 
 import com.mz.nhoz.dbf.RecordBuilder;
 import com.mz.nhoz.dbf.exception.RecordBuilderException;
+import com.mz.nhoz.dbf.util.RecordUtils;
+import com.mz.nhoz.dbf.util.exception.RecordUtilsException;
 
 import junit.framework.TestCase;
 
@@ -49,12 +53,12 @@ public class RecordBuilderTest extends TestCase {
 		assertEquals(dd, numberValue);
 		numberValue = record.getNumberValue("key_8");
 		assertEquals(ff, numberValue);
-		
+
 		rb.put("key_1", ss);
 		rb.put("key_2", ii);
 		rb.put("key_3", dd);
 		rb.put("key_4", ff);
-		
+
 		stringValue = protoRecord.getStringValue("key_1");
 		assertEquals(s, stringValue);
 		numberValue = protoRecord.getNumberValue("key_2");
@@ -65,7 +69,7 @@ public class RecordBuilderTest extends TestCase {
 		assertEquals(f, numberValue);
 	}
 
-	public void testGet() throws RecordBuilderException {
+	public void testBuild() throws RecordBuilderException {
 		String s = "Hola";
 		Integer i = new Integer(17);
 		Double d = new Double(17.8);
@@ -99,5 +103,15 @@ public class RecordBuilderTest extends TestCase {
 		assertEquals(i, numberValue);
 		numberValue = record.getNumberValue("key_4");
 		assertEquals(f, numberValue);
+	}
+
+	public void testPutAllEmpty() throws RecordBuilderException, RecordUtilsException {
+		Record record = new RecordBuilder().put("name", "martin").put("salary", 1234.456).put("age", 25).build();
+
+		RecordBuilder rb = new RecordBuilder(record);
+		HashMap<String, Object> emptyMap = new HashMap<String, Object>();
+		rb.putAll(emptyMap);
+
+		assertTrue(RecordUtils.equals(record, rb.build()));
 	}
 }

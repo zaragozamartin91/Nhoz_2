@@ -7,6 +7,13 @@ import nl.knaw.dans.common.dbflib.Record;
 
 import com.mz.nhoz.dbf.exception.RecordTransformerException;
 
+/**
+ * Realiza transformacion a un registro modificando uno o mas de sus valores
+ * obteniendo un registro distinto al original.
+ * 
+ * @author martin.zaragoza
+ *
+ */
 public class ValueSetRecordTransformer implements RecordTransformer {
 	private Map<String, Object> valuesToSet = new HashMap<String, Object>();
 
@@ -24,6 +31,15 @@ public class ValueSetRecordTransformer implements RecordTransformer {
 		super();
 	}
 
+	/**
+	 * Agrega un valor a modificar.
+	 * 
+	 * @param key
+	 *            - Nombre del valor a modificar.
+	 * @param value
+	 *            - Valor efectivo a setear.
+	 * @return this.
+	 */
 	public ValueSetRecordTransformer add(String key, Object value) {
 		valuesToSet.put(key, value);
 		return this;
@@ -38,5 +54,5 @@ public class ValueSetRecordTransformer implements RecordTransformer {
 		} catch (Exception e) {
 			throw new RecordTransformerException(e);
 		}
-	}//transform
-}//ValueSetRecordTransformer
+	}// transform
+}// ValueSetRecordTransformer

@@ -1,12 +1,14 @@
 package com.mz.nhoz.dbf;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import nl.knaw.dans.common.dbflib.Record;
 
 import com.mz.nhoz.dbf.exception.DbfWriterException;
+import com.mz.nhoz.dbf.util.RecordUtils;
 
 /**
  * Editor de archivos Dbf.
@@ -139,8 +141,39 @@ public class DbfWriter extends DbfManager {
 			throw new DbfWriterException(e);
 		}
 	}
-	
-	public void updateRecords( RecordTransformer transformer ){
-		
+
+	/**
+	 * Actualiza todos los registros de una tabla a partir de un transformador
+	 * de registros.
+	 * 
+	 * @param transformer
+	 *            - Transformador de registros.
+	 * @return cantidad de registros actualizados.
+	 * @throws DbfWriterException
+	 */
+	public int updateRecords(RecordTransformer transformer) throws DbfWriterException {
+		int updatedCount = 0;
+		int index = 0;
+
+		try {
+			Iterator<Record> recordIterator = getTable().recordIterator();
+
+			while (recordIterator.hasNext()) {
+				Record record = (Record) recordIterator.next();
+				Record record__ = transformer.transform(record);
+
+				if (RecordUtils.equals(record, record__)) {
+					continue;
+				}
+
+				this.updateRecord(record__, index);
+				index++;
+				updatedCount++;
+			}
+		} catch (Exception e) {
+			throw new DbfWriterException(e);
+		}
+
+		return updatedCount;
 	}
 }// DbfWriter

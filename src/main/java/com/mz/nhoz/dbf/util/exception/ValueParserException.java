@@ -1,4 +1,4 @@
-package com.mz.nhoz.dbf.exception;
+package com.mz.nhoz.dbf.util.exception;
 
 public class ValueParserException extends Exception {
 

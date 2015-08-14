@@ -8,16 +8,16 @@ import nl.knaw.dans.common.dbflib.Record;
 import nl.knaw.dans.common.dbflib.Value;
 
 import com.mz.nhoz.dbf.exception.RecordBuilderException;
-import com.mz.nhoz.dbf.exception.ValueParserException;
 import com.mz.nhoz.dbf.util.RecordUtils;
 import com.mz.nhoz.dbf.util.ValueSerializer;
 import com.mz.nhoz.dbf.util.exception.RecordUtilsException;
+import com.mz.nhoz.dbf.util.exception.ValueParserException;
 
 /**
  * Creador de Registros de tipo {@link nl.knaw.dans.common.dbflib.Record}.
  * 
  * Ejemplo de uso: <br/>
- * <code>Record r = new RecordBuilder().put("nombre","martin").put("edad",25).get();</code>
+ * <code>Record r = new RecordBuilder().put("nombre","martin").put("edad",25).build();</code>
  * 
  * @author martin.zaragoza
  *
@@ -34,15 +34,6 @@ public class RecordBuilder {
 	}
 	
 	public RecordBuilder(Map<String, Object> values) throws RecordBuilderException{
-//		Set<String> keySet = values.keySet();
-//		for (String key : keySet) {
-//			Object value = values.get(key);
-//			try {
-//				this.put(key, value);
-//			} catch (RecordBuilderException e) {
-//			}
-//		}
-		
 		this.putAll(values);
 	}//RecordBuilder
 
