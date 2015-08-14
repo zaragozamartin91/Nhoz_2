@@ -35,6 +35,22 @@ public class PersonRecord {
 		return age;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSalary(Double salary) {
+		this.salary = salary;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
 	// ID NAME SALARY AGE
 	public Map<String, Object> toMap() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -44,7 +60,13 @@ public class PersonRecord {
 		map.put("AGE", age);
 
 		return map;
-		
-//		return new BeanMap(this);
+
+		// return new BeanMap(this);
 	}
+
+	public PersonRecord() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 };

@@ -139,4 +139,8 @@ public class DbfWriter extends DbfManager {
 			throw new DbfWriterException(e);
 		}
 	}
+	
+	public void updateRecords( RecordTransformer transformer ){
+		
+	}
 }// DbfWriter

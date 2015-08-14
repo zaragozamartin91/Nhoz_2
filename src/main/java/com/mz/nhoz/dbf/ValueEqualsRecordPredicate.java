@@ -10,9 +10,25 @@ import com.mz.nhoz.dbf.util.exception.RecordUtilsException;
 
 import nl.knaw.dans.common.dbflib.Record;
 
+/**
+ * Predicado de verificacion de valores de un registro.
+ * 
+ * @author martin.zaragoza
+ *
+ */
 public class ValueEqualsRecordPredicate implements RecordPredicate {
 	private Map<String, Object> keyValues = new HashMap<String, Object>();
 
+	/**
+	 * Agregar valor a verificar.
+	 * 
+	 * @param key
+	 *            - id del valor a testear dentro del registro.
+	 * @param value
+	 * 
+	 *            - valor a testear.
+	 * @return this.
+	 */
 	public ValueEqualsRecordPredicate add(String key, Object value) {
 		keyValues.put(key, value);
 		return this;
@@ -26,7 +42,7 @@ public class ValueEqualsRecordPredicate implements RecordPredicate {
 	public ValueEqualsRecordPredicate(String key, Object value) {
 		keyValues.put(key, value);
 	}
-	
+
 	public ValueEqualsRecordPredicate() {
 		super();
 	}

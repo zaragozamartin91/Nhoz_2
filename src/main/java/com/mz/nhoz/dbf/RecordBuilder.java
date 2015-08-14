@@ -33,15 +33,17 @@ public class RecordBuilder {
 		super();
 	}
 	
-	public RecordBuilder(Map<String, Object> values){
-		Set<String> keySet = values.keySet();
-		for (String key : keySet) {
-			Object value = values.get(key);
-			try {
-				this.put(key, value);
-			} catch (RecordBuilderException e) {
-			}
-		}
+	public RecordBuilder(Map<String, Object> values) throws RecordBuilderException{
+//		Set<String> keySet = values.keySet();
+//		for (String key : keySet) {
+//			Object value = values.get(key);
+//			try {
+//				this.put(key, value);
+//			} catch (RecordBuilderException e) {
+//			}
+//		}
+		
+		this.putAll(values);
 	}//RecordBuilder
 
 	/**
@@ -79,6 +81,24 @@ public class RecordBuilder {
 
 		return this;
 	}// put
+	
+	
+	/**
+	 * Agrega todos los campos de un mapa.
+	 * 
+	 * @param values - Valores a agregar.
+	 * @return this.
+	 * @throws RecordBuilderException
+	 */
+	public RecordBuilder putAll(Map<String, Object> values) throws RecordBuilderException{
+		Set<String> keySet = values.keySet();
+		for (String key : keySet) {
+			Object value = values.get(key);
+			this.put(key, value);
+		}
+		
+		return this;
+	}//putAll
 
 	/**
 	 * Obtiene un nuevo registro a partir de los valores asignados.
