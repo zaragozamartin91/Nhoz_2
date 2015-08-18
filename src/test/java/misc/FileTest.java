@@ -13,4 +13,15 @@ public class FileTest extends TestCase {
 
 		assertTrue(file.getName().contentEquals(fileName));
 	}
+
+	public void testExtension() {
+		String fileName = "formulaDemo";
+		String fileExt = ".xlsx";
+		String fileNameExt = fileName + fileExt;
+
+		File file = new File("D:\\workspaces\\testWorkspace64\\Nhoz_2\\testFiles\\" + fileNameExt);
+		assertEquals(fileNameExt, file.getName());
+		
+		assertTrue( fileNameExt.toLowerCase().endsWith(fileExt) );
+	}
 }

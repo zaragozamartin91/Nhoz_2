@@ -13,6 +13,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -91,7 +92,8 @@ public class ReadExcelTest extends TestCase {
 			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
 			// Get first/desired sheet from the workbook
-			HSSFSheet sheet = workbook.getSheetAt(0);
+			Sheet sheet = workbook.getSheetAt(0);
+			
 
 			// Iterate through each rows one by one
 			Iterator<Row> rowIterator = sheet.iterator();
