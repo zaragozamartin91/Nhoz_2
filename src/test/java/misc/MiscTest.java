@@ -1,4 +1,4 @@
-package com.mz.nhoz;
+package misc;
 
 import java.util.Arrays;
 import java.util.Collection;

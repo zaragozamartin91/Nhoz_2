@@ -3,7 +3,6 @@ package com.mz.nhoz.xls;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,7 +13,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.mz.nhoz.xls.exception.ExcelReaderException;
 import com.mz.nhoz.xls.util.CellDeserializer;
-import com.mz.nhoz.xls.util.exception.CellDeserializerException;
 
 public class ExcelReader {
 	private Workbook workbook;
