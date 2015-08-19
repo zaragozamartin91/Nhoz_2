@@ -9,8 +9,9 @@ import com.mz.nhoz.dbf.exception.RecordTransformerException;
 public class ConditionalValueSetRecordTransformer extends ValueSetRecordTransformer {
 	private RecordPredicate predicate;
 
-	public void setPredicate(RecordPredicate predicate) {
+	public ConditionalValueSetRecordTransformer setPredicate(RecordPredicate predicate) {
 		this.predicate = predicate;
+		return this;
 	}
 
 	public ConditionalValueSetRecordTransformer(String key, Object value, RecordPredicate predicate) {
@@ -23,7 +24,12 @@ public class ConditionalValueSetRecordTransformer extends ValueSetRecordTransfor
 	}
 
 	public ConditionalValueSetRecordTransformer(Map<String, Object> valuesToSet) {
+		this(valuesToSet,null);
+	}
+	
+	public ConditionalValueSetRecordTransformer(Map<String, Object> valuesToSet ,RecordPredicate predicate) {
 		super(valuesToSet);
+		setPredicate(predicate);
 	}
 
 	public ConditionalValueSetRecordTransformer(String key, Object value) {

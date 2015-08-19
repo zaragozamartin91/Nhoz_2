@@ -8,31 +8,42 @@ import junit.framework.TestCase;
 
 public class ExcelReaderTest extends TestCase {
 	private File xlsFile = new File("testFiles/ExcelReaderTest.xls");
-	private File xlsXfile= new File("testFiles/ExcelReaderTest.xlsx");
+	private File xlsXfile = new File("testFiles/ExcelReaderTest.xlsx");
 
 	public void testGetTableHeaderXls() throws ExcelReaderException {
 		__testGetTableHeader(xlsFile);
 	}
-	
+
 	public void testGetTableHeaderXlsX() throws ExcelReaderException {
 		__testGetTableHeader(xlsXfile);
 	}
-	
-	private void __testGetTableHeader(File file) throws ExcelReaderException{
+
+	private void __testGetTableHeader(File file) throws ExcelReaderException {
 		// nombre apellido dni sueldo nacimiento
 		ExcelReader excelReader = new ExcelReader(file);
 		TableHeader expectedHeader = new TableHeader();
-		
+
 		expectedHeader.add("nombre", 0);
 		expectedHeader.add("apellido", 1);
 		expectedHeader.add("dni", 2);
 		expectedHeader.add("sueldo", 3);
 		expectedHeader.add("nacimiento", 4);
-		
+
 		TableHeader tableHeader = excelReader.getTableHeader();
-		
+
 		assertEquals(expectedHeader, tableHeader);
 		expectedHeader.add("nacimiento", 5);
 		assertNotSame(expectedHeader, tableHeader);
+
 	}
+
+	public void testRowRecordIterator() throws ExcelReaderException {
+		ExcelReader excelReader = new ExcelReader(xlsFile);
+		RowRecordIterator rowRecordIterator = excelReader.rowRecordIterator();
+
+		while (rowRecordIterator.hasNext()) {
+			RowRecord rowRecord = (RowRecord) rowRecordIterator.next();
+			System.out.println(rowRecord.toString());
+		}
+	}//testRowRecordIterator
 }

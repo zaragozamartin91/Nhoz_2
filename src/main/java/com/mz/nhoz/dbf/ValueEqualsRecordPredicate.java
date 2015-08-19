@@ -55,7 +55,19 @@ public class ValueEqualsRecordPredicate implements RecordPredicate {
 			Set<String> keySet = keyValues.keySet();
 
 			for (String key : keySet) {
-				if (keyValues.get(key).equals(recordContent.get(key)) == false) {
+				Object recordValue = recordContent.get(key);
+				Object compareValue = keyValues.get(key);
+
+				/*
+				 * si el tipo de valor del registro es String -> comparo ambos
+				 * valores como Strings
+				 */
+				if (recordValue.getClass().equals(String.class)) {
+					recordValue = recordValue.toString().trim();
+					compareValue = compareValue.toString().trim();
+				}
+
+				if (compareValue.equals(recordValue) == false) {
 					return false;
 				}
 			}

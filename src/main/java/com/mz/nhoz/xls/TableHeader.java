@@ -16,8 +16,38 @@ import java.util.Set;
 public class TableHeader {
 	private Map<String, Integer> map = new HashMap<String, Integer>();
 
-	public void add(String label, Integer colIndex) {
+	/**
+	 * Construye un encabezado a partir de nombres de encabezado asociando
+	 * indices de columna automaticamente del 0 a N.
+	 * 
+	 * @param labels
+	 *            - Nombres de encabezados.
+	 */
+	public TableHeader(String... labels) {
+		int index = 0;
+
+		for (String label : labels) {
+			this.add(label, index);
+			++index;
+		}
+	}
+
+	public TableHeader() {
+		super();
+	}
+
+	/**
+	 * Agrega un encabezado.
+	 * 
+	 * @param label
+	 *            - nombre de encabezado.
+	 * @param colIndex
+	 *            - Indice de columna.
+	 * @return this.
+	 */
+	public TableHeader add(String label, Integer colIndex) {
 		map.put(label, colIndex);
+		return this;
 	}
 
 	/**
@@ -36,7 +66,7 @@ public class TableHeader {
 	 * 
 	 * @param index
 	 *            - Indice de encabezado a buscar.
-	 * @return
+	 * @return Nombre de encabezado.
 	 */
 	public String getLabel(Integer index) {
 		if (map.isEmpty()) {

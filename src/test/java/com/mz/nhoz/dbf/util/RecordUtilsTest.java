@@ -1,10 +1,15 @@
 package com.mz.nhoz.dbf.util;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import nl.knaw.dans.common.dbflib.CorruptedTableException;
 import nl.knaw.dans.common.dbflib.Record;
+import nl.knaw.dans.common.dbflib.Table;
 
 import com.mz.nhoz.dbf.RecordBuilder;
 import com.mz.nhoz.dbf.exception.RecordBuilderException;
@@ -43,12 +48,12 @@ public class RecordUtilsTest extends TestCase {
 			rb_1.put(key, map.get(key));
 		}
 		Record record_1 = rb_1.build();
-		
+
 		Record record_2 = new RecordBuilder(map).build();
-		
-		assertTrue( RecordUtils.equals(record_1, record_2) );
+
+		assertTrue(RecordUtils.equals(record_1, record_2));
 	}
-	
+
 	public void testRecordEqualsSameRecord() throws RecordBuilderException, RecordUtilsException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", new String("martin"));
@@ -61,9 +66,21 @@ public class RecordUtilsTest extends TestCase {
 			rb_1.put(key, map.get(key));
 		}
 		Record record_1 = rb_1.build();
-		
+
 		Record record_2 = record_1;
-		
-		assertTrue( record_1.equals(record_2) && RecordUtils.equals(record_1, record_2) );
+
+		assertTrue(record_1.equals(record_2) && RecordUtils.equals(record_1, record_2));
+	}
+
+	public void testReadListapre() throws IOException, CorruptedTableException {
+		File dbfFile = new File("testFiles/LISTAPRE.DBF");
+		Table table = new Table(dbfFile);
+		table.open();
+
+		Iterator<Record> recordIterator = table.recordIterator();
+		Record record = recordIterator.next();
+		System.out.println(record.getNumberValue("PRECIOUNI"));
+
+		table.close();
 	}
 }
