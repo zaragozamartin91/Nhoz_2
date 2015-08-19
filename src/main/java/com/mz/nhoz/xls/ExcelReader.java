@@ -19,10 +19,26 @@ public class ExcelReader {
 	private Sheet sheet;
 	private TableHeader tableHeader;
 
+	/**
+	 * Abre un documento de excel a partir de un archivo en la hoja 0.
+	 * 
+	 * @param excFile
+	 *            - archivo xls o xlsX.
+	 * @throws ExcelReaderException
+	 */
 	public ExcelReader(File excFile) throws ExcelReaderException {
 		__reset(excFile, 0);
 	}
 
+	/**
+	 * Abre un documento de excel a partir de un archivo y un indice de hoja.
+	 * 
+	 * @param excFile
+	 *            - archivo xls o xlsX.
+	 * @param sheetIndex
+	 *            - indice de hoja.
+	 * @throws ExcelReaderException
+	 */
 	public ExcelReader(File excFile, int sheetIndex) throws ExcelReaderException {
 		__reset(excFile, sheetIndex);
 	}
@@ -44,6 +60,12 @@ public class ExcelReader {
 		}
 	}// __reset
 
+	/**
+	 * Obtiene el encabezado de la tabla.
+	 * 
+	 * @return encabezado de la tabla.
+	 * @throws ExcelReaderException
+	 */
 	public TableHeader getTableHeader() throws ExcelReaderException {
 		if (tableHeader == null) {
 			__buildTableHeader();
@@ -70,5 +92,5 @@ public class ExcelReader {
 		} catch (Exception e) {
 			throw new ExcelReaderException(e);
 		}
-	}//__buildTableHeader
+	}// __buildTableHeader
 }// ExcelReader
