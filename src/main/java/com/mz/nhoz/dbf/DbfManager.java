@@ -7,6 +7,12 @@ import nl.knaw.dans.common.dbflib.Table;
 
 import com.mz.nhoz.dbf.exception.DbfManagerException;
 
+/**
+ * Representa un manejador de tablas dbf.
+ * 
+ * @author martin.zaragoza
+ *
+ */
 public abstract class DbfManager {
 	private Table table;
 
