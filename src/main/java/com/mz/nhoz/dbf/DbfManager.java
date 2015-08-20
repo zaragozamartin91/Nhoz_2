@@ -10,10 +10,14 @@ import com.mz.nhoz.dbf.exception.DbfManagerException;
 public abstract class DbfManager {
 	private Table table;
 
-	public DbfManager(File dbfFile){
+	public DbfManager(File dbfFile) {
 		table = new Table(dbfFile);
 	}
-	
+
+	public DbfManager(DbfManager dbfManager) {
+		this.table = dbfManager.getTable();
+	}
+
 	protected Table getTable() {
 		return table;
 	}

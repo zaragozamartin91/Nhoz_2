@@ -14,6 +14,12 @@ import com.mz.nhoz.xls.exception.RowRecordException;
 import com.mz.nhoz.xls.util.CellDeserializer;
 import com.mz.nhoz.xls.util.exception.CellDeserializerException;
 
+/**
+ * Representa un registro de fila de Excel.
+ * 
+ * @author martin.zaragoza
+ *
+ */
 public class RowRecord {
 	public static final CellDeserializer CELL_DESERIALIZER = new CellDeserializer();
 

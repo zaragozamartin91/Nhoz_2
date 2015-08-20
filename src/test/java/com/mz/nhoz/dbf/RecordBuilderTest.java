@@ -1,6 +1,7 @@
 package com.mz.nhoz.dbf;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import nl.knaw.dans.common.dbflib.Record;
 
@@ -103,6 +104,26 @@ public class RecordBuilderTest extends TestCase {
 		assertEquals(i, numberValue);
 		numberValue = record.getNumberValue("key_4");
 		assertEquals(f, numberValue);
+	}
+
+	public void testPutAll() throws RecordBuilderException, RecordUtilsException {
+		Record record = new RecordBuilder().put("name", "martin").put("salary", 1234.456).put("age", 25).build();
+
+		Map<String, Object> values = new HashMap<String, Object>();
+		values.put("name", "martin");
+		values.put("salary", 1234.456);
+		values.put("age", 25);
+		Record record_2 = new RecordBuilder().putAll(values).build();
+
+		assertTrue(RecordUtils.equals(record, record_2));
+
+		Record record_3 = new RecordBuilder(record).put("job", "programmer").put("height", new Float(1.72)).build();
+		values = new HashMap<String, Object>();
+		values.put("job", "programmer");
+		values.put("height", new Float(1.72));
+		Record record_4 = new RecordBuilder(record_2).putAll(values).build();
+		
+		assertTrue( RecordUtils.equals(record_3, record_4) );
 	}
 
 	public void testPutAllEmpty() throws RecordBuilderException, RecordUtilsException {

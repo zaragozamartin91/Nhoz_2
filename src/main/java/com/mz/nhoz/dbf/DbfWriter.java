@@ -21,6 +21,10 @@ public class DbfWriter extends DbfManager {
 		super(dbfFile);
 	}
 
+	public DbfWriter(DbfManager dbfManager) {
+		super(dbfManager);
+	}
+
 	public Record addRecord(Record record) throws DbfWriterException {
 		try {
 			getTable().addRecord(record);
@@ -30,6 +34,16 @@ public class DbfWriter extends DbfManager {
 		return record;
 	}
 
+	/**
+	 * Actualiza un registro.
+	 * 
+	 * @param record
+	 *            - Registro a actualizar.
+	 * @param index
+	 *            - Indice de registro a actualizar.
+	 * @return record.
+	 * @throws DbfWriterException
+	 */
 	public Record updateRecord(Record record, int index) throws DbfWriterException {
 		try {
 			getTable().updateRecordAt(index, record);
@@ -66,6 +80,51 @@ public class DbfWriter extends DbfManager {
 			throw new DbfWriterException(e);
 		}
 	}// addRecord
+
+	/**
+	 * Actualiza registros a partir de un predicado y un conjunto de valores a
+	 * aplicar.
+	 * 
+	 * @param valueMap
+	 *            - Valores a establecer a los registros.
+	 * @param predicate
+	 *            - Predicado que los registros a modificar deben cumplir.
+	 * @param oneRecord
+	 *            - True si se desea actualizar el primer registro que cumpla
+	 *            con el predicado.
+	 * @return Cantidad de registros modificados.
+	 * @throws DbfWriterException
+	 */
+	public int updateRecords(Map<String, Object> valueMap, RecordPredicate predicate, boolean oneRecord) throws DbfWriterException {
+		try {
+			Iterator<Record> recordIterator = getTable().recordIterator();
+			int index = 0;
+			int updatedCount = 0;
+
+			while (recordIterator.hasNext()) {
+				Record record = (Record) recordIterator.next();
+
+				if (predicate.test(record)) {
+					Record record__ = new RecordBuilder(record).putAll(valueMap).build();
+
+					if (RecordUtils.equals(record, record__) == false) {
+						this.updateRecord(record__, index);
+						updatedCount++;
+					}
+
+					if (oneRecord) {
+						return updatedCount;
+					}
+				}
+
+				index++;
+			}
+
+			return updatedCount;
+		} catch (Exception e) {
+			throw new DbfWriterException(e);
+		}
+	}// updateRecords
 
 	/**
 	 * Actualiza un registro.
@@ -162,13 +221,12 @@ public class DbfWriter extends DbfManager {
 				Record record = (Record) recordIterator.next();
 				Record record__ = transformer.transform(record);
 
-				if (RecordUtils.equals(record, record__)) {
-					continue;
+				if (RecordUtils.equals(record, record__) == false) {
+					this.updateRecord(record__, index);
+					updatedCount++;
 				}
 
-				this.updateRecord(record__, index);
 				index++;
-				updatedCount++;
 			}
 		} catch (Exception e) {
 			throw new DbfWriterException(e);

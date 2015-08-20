@@ -17,6 +17,10 @@ public class DbfReader extends DbfManager {
 	public DbfReader(File dbfFile) {
 		super(dbfFile);
 	}
+	
+	public DbfReader(DbfManager dbfManager) {
+		super(dbfManager);
+	}
 
 	/**
 	 * Retorna un registro a partir de un indice. NOTA: se tienen en cuenta

@@ -8,7 +8,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -17,6 +16,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.mz.nhoz.xls.ExcelReader;
+import com.mz.nhoz.xls.RowRecord;
+import com.mz.nhoz.xls.RowRecordIterator;
+import com.mz.nhoz.xls.exception.ExcelReaderException;
 
 public class ReadExcelTest extends TestCase {
 	/**
@@ -35,6 +38,7 @@ public class ReadExcelTest extends TestCase {
 	public static Test suite() {
 		return new TestSuite(ReadExcelTest.class);
 	}
+
 	public void testReadXlsX() {
 		try {
 			String pathname = "testFiles/formulaDemo.xlsx";
@@ -62,15 +66,15 @@ public class ReadExcelTest extends TestCase {
 					Cell cell = cellIterator.next();
 					// Check the cell type and format accordingly
 					switch (cell.getCellType()) {
-					case Cell.CELL_TYPE_NUMERIC:
-						System.out.print(cell.getNumericCellValue() + "\t");
-						break;
-					case Cell.CELL_TYPE_STRING:
-						System.out.print(cell.getStringCellValue() + "\t");
-						break;
-					case Cell.CELL_TYPE_FORMULA:
-						System.out.println(evaluator.evaluate(cell).getNumberValue());
-						break;
+						case Cell.CELL_TYPE_NUMERIC:
+							System.out.print(cell.getNumericCellValue() + "\t");
+							break;
+						case Cell.CELL_TYPE_STRING:
+							System.out.print(cell.getStringCellValue() + "\t");
+							break;
+						case Cell.CELL_TYPE_FORMULA:
+							System.out.println(evaluator.evaluate(cell).getNumberValue());
+							break;
 					}
 				}
 				System.out.println("");
@@ -80,7 +84,7 @@ public class ReadExcelTest extends TestCase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void testReadOldXls() {
 		try {
 			String pathname = "testFiles/oldXls.xls";
@@ -93,7 +97,6 @@ public class ReadExcelTest extends TestCase {
 
 			// Get first/desired sheet from the workbook
 			Sheet sheet = workbook.getSheetAt(0);
-			
 
 			// Iterate through each rows one by one
 			Iterator<Row> rowIterator = sheet.iterator();
@@ -109,15 +112,15 @@ public class ReadExcelTest extends TestCase {
 					Cell cell = cellIterator.next();
 					// Check the cell type and format accordingly
 					switch (cell.getCellType()) {
-					case Cell.CELL_TYPE_NUMERIC:
-						System.out.print(cell.getNumericCellValue() + "\t");
-						break;
-					case Cell.CELL_TYPE_STRING:
-						System.out.print(cell.getStringCellValue() + "\t");
-						break;
-					case Cell.CELL_TYPE_FORMULA:
-						System.out.println(evaluator.evaluate(cell).getNumberValue());
-						break;
+						case Cell.CELL_TYPE_NUMERIC:
+							System.out.print(cell.getNumericCellValue() + "\t");
+							break;
+						case Cell.CELL_TYPE_STRING:
+							System.out.print(cell.getStringCellValue() + "\t");
+							break;
+						case Cell.CELL_TYPE_FORMULA:
+							System.out.println(evaluator.evaluate(cell).getNumberValue());
+							break;
 					}
 				}
 				System.out.println("");
@@ -127,5 +130,16 @@ public class ReadExcelTest extends TestCase {
 			e.printStackTrace();
 		}
 	}
+
+	public void testReadMoneyAndPercentageValues() throws ExcelReaderException {
+		ExcelReader excelReader = new ExcelReader(new File("testFiles/testReadMoneyValues.xls"));
+
+		RowRecordIterator rowRecordIterator = excelReader.rowRecordIterator();
+
+		while (rowRecordIterator.hasNext()) {
+			RowRecord rowRecord = (RowRecord) rowRecordIterator.next();
+			System.out.println(rowRecord.toString());
+		}
+	}//testReadMoneyAndPercentageValues
 
 }
