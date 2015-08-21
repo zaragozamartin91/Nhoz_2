@@ -19,6 +19,16 @@ import nl.knaw.dans.common.dbflib.Record;
 public class ValueEqualsRecordPredicate implements RecordPredicate {
 	private Map<String, Object> keyValues = new HashMap<String, Object>();
 
+	public ValueEqualsRecordPredicate(Map<String, Object> keyValues) {
+		super();
+		this.keyValues = new HashMap<String, Object>(keyValues);
+	}
+
+	public ValueEqualsRecordPredicate(String key, Object value) {
+		keyValues.put(key, value);
+	}
+	
+	
 	/**
 	 * Agregar valor a verificar.
 	 * 
@@ -34,18 +44,6 @@ public class ValueEqualsRecordPredicate implements RecordPredicate {
 		return this;
 	}
 
-	public ValueEqualsRecordPredicate(Map<String, Object> keyValues) {
-		super();
-		this.keyValues = new HashMap<String, Object>(keyValues);
-	}
-
-	public ValueEqualsRecordPredicate(String key, Object value) {
-		keyValues.put(key, value);
-	}
-
-	public ValueEqualsRecordPredicate() {
-		super();
-	}
 
 	@Override
 	public boolean test(Record record) throws RecordPredicateException {
