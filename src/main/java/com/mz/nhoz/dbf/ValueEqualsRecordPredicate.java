@@ -27,8 +27,7 @@ public class ValueEqualsRecordPredicate implements RecordPredicate {
 	public ValueEqualsRecordPredicate(String key, Object value) {
 		keyValues.put(key, value);
 	}
-	
-	
+
 	/**
 	 * Agregar valor a verificar.
 	 * 
@@ -44,7 +43,6 @@ public class ValueEqualsRecordPredicate implements RecordPredicate {
 		return this;
 	}
 
-
 	@Override
 	public boolean test(Record record) throws RecordPredicateException {
 		try {
@@ -55,6 +53,10 @@ public class ValueEqualsRecordPredicate implements RecordPredicate {
 			for (String key : keySet) {
 				Object recordValue = recordContent.get(key);
 				Object compareValue = keyValues.get(key);
+
+				if (compareValue == null) {
+					return false;
+				}
 
 				/*
 				 * si el tipo de valor del registro es String -> comparo ambos

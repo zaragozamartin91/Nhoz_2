@@ -81,4 +81,12 @@ public class ExcelReaderTest extends TestCase {
 			System.out.println(rowRecord.toString());
 		}
 	}// testRowRecordIterator
+
+	public void testOpenWrongTypeFile() {
+		try {
+			new ExcelReader(new File("someFile.asd"));
+			fail();
+		} catch (ExcelReaderException e) {
+		}
+	}
 }

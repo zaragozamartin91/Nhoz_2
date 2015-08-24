@@ -1,6 +1,7 @@
 package com.mz.nhoz.dbf;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -17,12 +18,35 @@ public class DbfPredicateWriter extends DbfWriter {
 		this.predicate = predicate;
 	}
 
+	public DbfPredicateWriter(File dbfFile) {
+		super(dbfFile);
+	}
+
 	public RecordPredicate getPredicate() {
 		return predicate;
 	}
 
 	public void setPredicate(RecordPredicate predicate) {
 		this.predicate = predicate;
+	}
+
+	/**
+	 * Actualiza registros a partir de un predicado y una clave y valor a
+	 * modificar.
+	 * 
+	 * @param key
+	 *            - clave de campo a actualizar.
+	 * @param value
+	 *            - valor a establecer.
+	 * @param oneRecord
+	 *            - bandera de modificacion de unico registro.
+	 * @return cantidad de registros actualizados.
+	 * @throws DbfWriterException
+	 */
+	public int updateRecords(String key, Object value, boolean oneRecord) throws DbfWriterException {
+		Map<String, Object> valueMap = new HashMap<String, Object>();
+		valueMap.put(key, value);
+		return updateRecords(valueMap, oneRecord);
 	}
 
 	/**

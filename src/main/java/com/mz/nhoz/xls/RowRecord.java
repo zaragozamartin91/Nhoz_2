@@ -35,7 +35,6 @@ public class RowRecord {
 		}
 	}// cons
 
-
 	private void __build(Row row, TableHeader header) throws CellDeserializerException {
 		Iterator<Cell> cellIterator = row.cellIterator();
 
@@ -53,6 +52,10 @@ public class RowRecord {
 			++index;
 		}
 	}// __build
+
+	public boolean isEmpty() {
+		return valueMap.isEmpty();
+	}
 
 	public Set<String> keys() {
 		return this.valueMap.keySet();

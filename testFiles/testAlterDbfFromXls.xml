@@ -13,9 +13,10 @@
 		<constructor-arg type="java.lang.String"
 			value="testFiles/testAlterDbfFromXls.DBF"></constructor-arg>
 	</bean>
-	
+
 	<bean name="testAlterDbfFromXls_xls" class="java.io.File">
-		<constructor-arg type="java.lang.String" value="testFiles/testAlterDbfFromXls.xls"/>
+		<constructor-arg type="java.lang.String"
+			value="testFiles/testAlterDbfFromXls.xls" />
 	</bean>
 
 	<bean name="excelReader" class="com.mz.nhoz.xls.ExcelReader">
@@ -23,4 +24,7 @@
 		<constructor-arg type="int" value="0" />
 	</bean>
 
+	<bean name="dbfPredicateWriter" class="com.mz.nhoz.dbf.DbfPredicateWriter">
+		<constructor-arg type="java.io.File" ref="testAlterDbfFromXls_dbf" />
+	</bean>
 </beans>

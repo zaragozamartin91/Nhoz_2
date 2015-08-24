@@ -80,8 +80,11 @@ public class ExcelReader {
 
 			if (excelDocType.isXls()) {
 				workbook = new HSSFWorkbook(fis);
-			} else {
+			} else if (excelDocType.isXlsx()) {
 				workbook = new XSSFWorkbook(fis);
+			} else {
+				fis.close();
+				throw new ExcelReaderException("Tipo de archivo de entrada no es Xls ni Xlsx!");
 			}
 
 			sheet = workbook.getSheetAt(sheetIndex);
@@ -128,7 +131,7 @@ public class ExcelReader {
 				while (__cellIterator.hasNext()) {
 					Cell cell = (Cell) __cellIterator.next();
 					if (cellDeserializer.isEmpty(cell)) {
-//						System.out.println("Empty cell found!");
+						// System.out.println("Empty cell found!");
 					} else {
 						stringBuilder.append(cellDeserializer.deserialize(cell) + "\t");
 					}
