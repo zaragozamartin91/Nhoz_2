@@ -6,11 +6,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.log4j.Logger;
+
 import com.mz.nhoz.config.exception.ConfigurationException;
 import com.mz.nhoz.util.StringPair;
 import com.mz.nhoz.util.StringUtils;
 
 public class Configuration {
+	Logger logger = Logger.getLogger(Configuration.class);
+
 	public static final String DBF_FILE_KEY = "archivoDbf";
 	public static final String XLS_FILE_KEY = "archivoExcel";
 	public static final String PROVIDER_KEY = "proveedor";
@@ -23,6 +27,7 @@ public class Configuration {
 
 	public Configuration(File configFile) throws ConfigurationException {
 		try {
+			logger.info("Leyendo configuraciones de " + configFile.getAbsolutePath());
 			fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(configFile)));
 			__load();
 		} catch (Exception e) {
@@ -30,7 +35,7 @@ public class Configuration {
 		}
 	}
 
-	private void __load() throws IOException, ConfigurationException {
+	private void __load() throws ConfigurationException {
 		try {
 			String line = null;
 
