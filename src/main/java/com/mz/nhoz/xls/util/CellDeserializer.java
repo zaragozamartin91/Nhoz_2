@@ -52,4 +52,13 @@ public class CellDeserializer {
 			throw new CellDeserializerException(e);
 		}
 	}// isBlank
+
+	public boolean isEmpty(Cell cell) throws CellDeserializerException {
+		try {
+			String s_value = this.deserialize(cell).toString();
+			return s_value == null || s_value.contentEquals("");
+		} catch (Exception e) {
+			throw new CellDeserializerException(e);
+		}
+	}
 }// CellDeserializer

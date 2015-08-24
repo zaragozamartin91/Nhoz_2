@@ -11,7 +11,6 @@
 	</bean>
 
 
-
 	<bean id="vePredicate" class="com.mz.nhoz.dbf.ValueEqualsRecordPredicate">
 		<constructor-arg type="java.util.Map">
 			<map>

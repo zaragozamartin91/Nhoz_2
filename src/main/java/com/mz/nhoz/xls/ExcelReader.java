@@ -18,8 +18,6 @@ public class ExcelReader {
 	private Workbook workbook;
 	private Sheet sheet;
 	private TableHeader tableHeader;
-	private int currRowIndex = 0;
-	private Iterator<Row> rowIterator;
 
 	/**
 	 * Abre un documento de excel a partir de un archivo en la hoja 0.
@@ -73,7 +71,7 @@ public class ExcelReader {
 		} catch (Exception e) {
 			throw new ExcelReaderException(e);
 		}
-	}//rowRecordIterator
+	}// rowRecordIterator
 
 	private void __reset(File excFile, int sheetIndex) throws ExcelReaderException {
 		try {
@@ -94,7 +92,7 @@ public class ExcelReader {
 
 	private void __buildTableHeader() throws ExcelReaderException {
 		try {
-			CellDeserializer cd = new CellDeserializer();
+			CellDeserializer cellDeserializer = new CellDeserializer();
 			tableHeader = new TableHeader();
 
 			Iterator<Row> rowIterator = sheet.iterator();
@@ -104,7 +102,12 @@ public class ExcelReader {
 			int index = 0;
 			while (cellIterator.hasNext()) {
 				Cell cell = (Cell) cellIterator.next();
-				tableHeader.add((String) cd.deserialize(cell), index);
+
+				if (cellDeserializer.isBlank(cell) == false) {
+					String label = (String) cellDeserializer.deserialize(cell);
+					tableHeader.add(label.trim(), index);
+				}
+
 				index++;
 			}
 		} catch (Exception e) {
@@ -112,34 +115,33 @@ public class ExcelReader {
 		}
 	}// __buildTableHeader
 
-	private Row __nextRow() {
-		if (this.rowIterator.hasNext()) {
-			this.currRowIndex++;
-			return this.rowIterator.next();
+	public String toString() {
+		try {
+			StringBuilder stringBuilder = new StringBuilder();
+			CellDeserializer cellDeserializer = new CellDeserializer();
+
+			Iterator<Row> __rowIterator = this.sheet.iterator();
+			while (__rowIterator.hasNext()) {
+				Row row = (Row) __rowIterator.next();
+
+				Iterator<Cell> __cellIterator = row.cellIterator();
+				while (__cellIterator.hasNext()) {
+					Cell cell = (Cell) __cellIterator.next();
+					if (cellDeserializer.isEmpty(cell)) {
+//						System.out.println("Empty cell found!");
+					} else {
+						stringBuilder.append(cellDeserializer.deserialize(cell) + "\t");
+					}
+				}// while (__cellIterator.hasNext())
+
+				stringBuilder.append("\n");
+			}
+
+			return stringBuilder.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-
-		return null;
-	}// __nextRow
-
-	private void __resetRowIterator() {
-		this.rowIterator = sheet.rowIterator();
-		this.currRowIndex = 0;
-	}// __resetRowIterator
-
-	private void __checkResetRowIterator(int rowIndex) {
-		if (rowIndex < this.currRowIndex) {
-			__resetRowIterator();
-		}
-	}// __checkResetRowIterator
-
-	private Row __getRow(int rowIndex) {
-		__checkResetRowIterator(rowIndex);
-
-		Row row = null;
-		while (this.currRowIndex <= rowIndex) {
-
-		}
-
-		return null;
 	}
+
 }// ExcelReader

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+	default-init-method="init" default-destroy-method="destroy">
+
+	<bean name="listapre_dbf" class="java.io.File">
+		<constructor-arg type="java.lang.String" value="testFiles/LISTAPRE.DBF"></constructor-arg>
+	</bean>
+
+	<bean name="testAlterDbfFromXls_dbf" class="java.io.File">
+		<constructor-arg type="java.lang.String"
+			value="testFiles/testAlterDbfFromXls.DBF"></constructor-arg>
+	</bean>
+	
+	<bean name="testAlterDbfFromXls_xls" class="java.io.File">
+		<constructor-arg type="java.lang.String" value="testFiles/testAlterDbfFromXls.xls"/>
+	</bean>
+
+	<bean name="excelReader" class="com.mz.nhoz.xls.ExcelReader">
+		<constructor-arg type="java.io.File" ref="testAlterDbfFromXls_xls" />
+		<constructor-arg type="int" value="0" />
+	</bean>
+
+</beans>

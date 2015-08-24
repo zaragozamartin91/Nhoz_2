@@ -35,6 +35,7 @@ public class RowRecord {
 		}
 	}// cons
 
+
 	private void __build(Row row, TableHeader header) throws CellDeserializerException {
 		Iterator<Cell> cellIterator = row.cellIterator();
 
@@ -42,10 +43,13 @@ public class RowRecord {
 
 		while (cellIterator.hasNext()) {
 			Cell cell = (Cell) cellIterator.next();
-			Object deserializedCellValue = CELL_DESERIALIZER.deserialize(cell);
-			String cellLabel = header.getLabel(index);
 
-			valueMap.put(cellLabel, deserializedCellValue);
+			if (!CELL_DESERIALIZER.isBlank(cell) && !CELL_DESERIALIZER.isEmpty(cell)) {
+				Object deserializedCellValue = CELL_DESERIALIZER.deserialize(cell);
+				String cellLabel = header.getLabel(index);
+
+				valueMap.put(cellLabel, deserializedCellValue);
+			}
 			++index;
 		}
 	}// __build
@@ -64,5 +68,9 @@ public class RowRecord {
 
 	public String toString() {
 		return new Gson().toJson(this.valueMap);
+	}
+
+	public boolean equalsMap(Map<String, Object> map) {
+		return this.valueMap.equals(map);
 	}
 }// RowRecord

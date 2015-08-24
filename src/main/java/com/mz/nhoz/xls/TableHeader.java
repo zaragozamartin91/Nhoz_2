@@ -118,4 +118,8 @@ public class TableHeader {
 			return false;
 		return true;
 	}
+
+	public String toString() {
+		return this.map.toString();
+	}
 }// TableHeader
