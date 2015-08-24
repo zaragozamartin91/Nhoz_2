@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.mz.nhoz.dbf.exception.RecordPredicateException;
 import com.mz.nhoz.dbf.util.RecordUtils;
 import com.mz.nhoz.dbf.util.exception.RecordUtilsException;
@@ -71,10 +73,16 @@ public class ValueEqualsRecordPredicate implements RecordPredicate {
 					return false;
 				}
 			}
+
+			Logger.getLogger(getClass()).info("testeo de " + this.toString() + " para " + recordContent.toString() + " paso exitosamente!");
+
+			return true;
 		} catch (RecordUtilsException e) {
 			throw new RecordPredicateException(e);
 		}
+	}
 
-		return true;
+	public String toString() {
+		return "" + this.getClass().getName() + "[" + this.keyValues.toString() + "]";
 	}
 }// ValueEqualsRecordPredicate
