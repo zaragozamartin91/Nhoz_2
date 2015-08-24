@@ -1,0 +1,10 @@
+
+# indica path de archivo DBF a modificar
+archivoDbf  = C:\Users\martin.zaragoza\Documents\Some folder\some file.dbf
+
+# indica el path del archivo de excel a usar para modificar el dbf
+archivoExcel =     C:\Users\martin.zaragoza\Documents\Some folder\some file.xls
+
+
+# indica el id del proveedor
+proveedor=06
