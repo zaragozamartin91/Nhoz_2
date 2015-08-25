@@ -84,6 +84,7 @@ public class MainApp {
 
 	private void __alterDbf() throws ExcelReaderException {
 		RowRecordIterator rowRecordIterator = excelReader.rowRecordIterator();
+		int i = 0;
 
 		while (rowRecordIterator.hasNext()) {
 			RowRecord rowRecord = (RowRecord) rowRecordIterator.next();
@@ -94,6 +95,12 @@ public class MainApp {
 
 			try {
 				String articulo = (String) rowRecord.get("ARTICULO");
+				if (StringUtils.empty(articulo)) {
+					continue;
+				}
+
+				logger.info("Analizando registro xls " + (i++) + " :: " + rowRecord.toString());
+
 				ValueEqualsRecordPredicate predicate = new ValueEqualsRecordPredicate("CODIGOPROV", providerId).add("ARTICULO", articulo);
 				dbfWriter.setPredicate(predicate);
 
