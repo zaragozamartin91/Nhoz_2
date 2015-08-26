@@ -17,12 +17,15 @@ public class Configuration {
 	public static final String DBF_FILE_KEY = "archivoDbf";
 	public static final String XLS_FILE_KEY = "archivoExcel";
 	public static final String PROVIDER_KEY = "proveedor";
+	public static final String DIGITS_KEY = "caracteresArticulo";
+	public static final Integer ANY_DIGITS = -1;
 	private static final String DELIM = "=";
 
 	private BufferedReader fileReader;
 	private String dbfFilePath = "C:\\Martin\\LISTAPRE.DBF";
 	private String xlsFilePath = "C:\\Xls\\PROVEEDOR.xls";
 	private String providerId = null;
+	private Integer articleDigits = ANY_DIGITS;
 
 	public Configuration(File configFile) throws ConfigurationException {
 		try {
@@ -33,7 +36,6 @@ public class Configuration {
 			throw new ConfigurationException(e);
 		}
 	}
-
 
 	private void __load() throws ConfigurationException {
 		try {
@@ -63,6 +65,8 @@ public class Configuration {
 				this.xlsFilePath = value;
 			} else if (key.equals(PROVIDER_KEY)) {
 				this.providerId = value;
+			} else if (key.equals(DIGITS_KEY)) {
+				this.articleDigits = Integer.valueOf(value);
 			}
 		}
 	}
@@ -79,5 +83,7 @@ public class Configuration {
 		return providerId;
 	}
 
-
+	public Integer getArticleDigits() {
+		return articleDigits;
+	}
 }// Configuration

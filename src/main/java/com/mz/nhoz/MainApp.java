@@ -11,6 +11,7 @@ import com.mz.nhoz.dbf.ValueEqualsRecordPredicate;
 import com.mz.nhoz.dbf.exception.DbfManagerException;
 import com.mz.nhoz.util.NumberUtils;
 import com.mz.nhoz.util.StringUtils;
+import com.mz.nhoz.util.exception.NumberUtilsException;
 import com.mz.nhoz.xls.ExcelReader;
 import com.mz.nhoz.xls.RowRecord;
 import com.mz.nhoz.xls.RowRecordIterator;
@@ -90,6 +91,18 @@ public class MainApp {
 		logger.info("Nhoz finalizó exitosamente.");
 	}// run
 
+	private Object __parseArticulo(Object o_articulo) throws NumberUtilsException {
+		if (o_articulo.getClass().getSuperclass().equals(Number.class)) {
+			o_articulo = NumberUtils.parseUsLocaleNumberStringAsInteger(o_articulo.toString());
+
+			if (configuration.getArticleDigits() != Configuration.ANY_DIGITS) {
+				o_articulo = NumberUtils.parseIntegerAsString((Integer) o_articulo, configuration.getArticleDigits());
+			}
+		}
+
+		return o_articulo;
+	}
+
 	private void __alterDbf() throws ExcelReaderException {
 		RowRecordIterator rowRecordIterator = excelReader.rowRecordIterator();
 		int i = 0;
@@ -105,12 +118,12 @@ public class MainApp {
 
 				Object o_articulo = rowRecord.get(ARTICULO_KEY);
 				Object o_preciouni = rowRecord.get(PRECIOUNI_KEY);
-				if ( StringUtils.nullOrEmpty(o_articulo) ||  StringUtils.nullOrEmpty(o_preciouni) ) {
+				if (StringUtils.nullOrEmpty(o_articulo) || StringUtils.nullOrEmpty(o_preciouni)) {
 					continue;
 				}
-				if (o_articulo.getClass().getSuperclass().equals(Number.class)) {
-					o_articulo = NumberUtils.parseUsLocaleNumberStringAsInteger(o_articulo.toString());
-				}
+
+				o_articulo = __parseArticulo(o_articulo);
+
 				String s_articulo = o_articulo.toString();
 				rowRecord.put(ARTICULO_KEY, s_articulo);
 
