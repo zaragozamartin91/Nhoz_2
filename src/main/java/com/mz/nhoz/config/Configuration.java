@@ -3,7 +3,6 @@ package com.mz.nhoz.config;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.apache.log4j.Logger;
@@ -34,6 +33,7 @@ public class Configuration {
 			throw new ConfigurationException(e);
 		}
 	}
+
 
 	private void __load() throws ConfigurationException {
 		try {
@@ -78,4 +78,6 @@ public class Configuration {
 	public String getProviderId() {
 		return providerId;
 	}
+
+
 }// Configuration

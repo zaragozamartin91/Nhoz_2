@@ -10,6 +10,10 @@ public class StringUtils {
 		return s == null || s.contentEquals("");
 	}
 
+	public static boolean nullOrEmpty(Object o) {
+		return o == null || o.toString().contentEquals("");
+	}
+
 	public static boolean notNullNorEmpty(String s) {
 		return s != null && !s.contentEquals("");
 	}

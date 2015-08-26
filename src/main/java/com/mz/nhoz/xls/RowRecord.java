@@ -76,4 +76,9 @@ public class RowRecord {
 	public boolean equalsMap(Map<String, Object> map) {
 		return this.valueMap.equals(map);
 	}
+
+	public RowRecord put(String key, Object value) {
+		this.valueMap.put(key, value);
+		return this;
+	}
 }// RowRecord

@@ -9,7 +9,7 @@ import com.mz.nhoz.config.exception.ConfigurationException;
 import com.mz.nhoz.dbf.DbfPredicateWriter;
 import com.mz.nhoz.dbf.ValueEqualsRecordPredicate;
 import com.mz.nhoz.dbf.exception.DbfManagerException;
-import com.mz.nhoz.dbf.exception.DbfWriterException;
+import com.mz.nhoz.util.NumberUtils;
 import com.mz.nhoz.util.StringUtils;
 import com.mz.nhoz.xls.ExcelReader;
 import com.mz.nhoz.xls.RowRecord;
@@ -17,6 +17,8 @@ import com.mz.nhoz.xls.RowRecordIterator;
 import com.mz.nhoz.xls.exception.ExcelReaderException;
 
 public class MainApp {
+	private static final String PRECIOUNI_KEY = "PRECIOUNI";
+	private static final String ARTICULO_KEY = "ARTICULO";
 	private static final String CFG_FILE_PATH = "config/nhoz.cfg";
 	private Logger logger = Logger.getLogger(MainApp.class);
 	private Configuration configuration;
@@ -32,11 +34,16 @@ public class MainApp {
 		logger.info("Corriendo nhoz...");
 		File configFile = new File(CFG_FILE_PATH);
 
-		logger.info("Leyendo configuraciones desde " + configFile.getAbsolutePath());
-		try {
-			configuration = new Configuration(configFile);
-		} catch (ConfigurationException e) {
-			logger.error("Ocurrió un error durante la carga de configuraciones.", e);
+		if (configFile.exists()) {
+			logger.info("Leyendo configuraciones desde " + configFile.getAbsolutePath());
+			try {
+				configuration = new Configuration(configFile);
+			} catch (ConfigurationException e) {
+				logger.error("Ocurrió un error durante la carga de configuraciones.", e);
+				return;
+			}
+		} else {
+			logger.error("ARCHIVO DE CONFIGURACION " + configFile.getAbsolutePath() + " NO EXISTE!");
 			return;
 		}
 
@@ -69,7 +76,8 @@ public class MainApp {
 		try {
 			__alterDbf();
 		} catch (ExcelReaderException e1) {
-			logger.error("Ocurrió un error durante la modificación del archivo dbf " + configuration.getDbfFilePath(), e1);
+			logger.error("Ocurrió un error durante la modificación del archivo dbf " + configuration.getDbfFilePath(),
+					e1);
 			return;
 		}
 
@@ -94,20 +102,26 @@ public class MainApp {
 				if (rowRecord.isEmpty()) {
 					continue;
 				}
-				
-				String articulo = (String) rowRecord.get("ARTICULO");
-				if (StringUtils.nullOrEmpty(articulo)) {
+
+				Object o_articulo = rowRecord.get(ARTICULO_KEY);
+				Object o_preciouni = rowRecord.get(PRECIOUNI_KEY);
+				if ( StringUtils.nullOrEmpty(o_articulo) ||  StringUtils.nullOrEmpty(o_preciouni) ) {
 					continue;
 				}
+				if (o_articulo.getClass().getSuperclass().equals(Number.class)) {
+					o_articulo = NumberUtils.parseUsLocaleNumberStringAsInteger(o_articulo.toString());
+				}
+				String s_articulo = o_articulo.toString();
+				rowRecord.put(ARTICULO_KEY, s_articulo);
 
 				logger.info("Analizando registro xls " + (i++) + " :: " + rowRecord.toString());
 
-				predicate.put("ARTICULO", articulo);
+				predicate.put(ARTICULO_KEY, s_articulo);
 				dbfWriter.setPredicate(predicate);
 
-				dbfWriter.updateRecords("PRECIOUNI", rowRecord.get("PRECIOUNI"), true);
+				dbfWriter.updateRecords(PRECIOUNI_KEY, o_preciouni, true);
 			} catch (Exception e) {
-				logger.error("Error al actualizar el registro " + rowRecord.toString());
+				logger.error("Error al actualizar el registro " + rowRecord.toString() + "::excepcion::" + e.toString());
 			}
 		}// while (rowRecordIterator.hasNext())
 	}// __alterDbf
