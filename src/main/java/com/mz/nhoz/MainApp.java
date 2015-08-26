@@ -85,27 +85,28 @@ public class MainApp {
 	private void __alterDbf() throws ExcelReaderException {
 		RowRecordIterator rowRecordIterator = excelReader.rowRecordIterator();
 		int i = 0;
+		ValueEqualsRecordPredicate predicate = new ValueEqualsRecordPredicate("CODIGOPROV", providerId);
 
 		while (rowRecordIterator.hasNext()) {
 			RowRecord rowRecord = (RowRecord) rowRecordIterator.next();
 
-			if (rowRecord.isEmpty()) {
-				continue;
-			}
-
 			try {
+				if (rowRecord.isEmpty()) {
+					continue;
+				}
+				
 				String articulo = (String) rowRecord.get("ARTICULO");
-				if (StringUtils.empty(articulo)) {
+				if (StringUtils.nullOrEmpty(articulo)) {
 					continue;
 				}
 
 				logger.info("Analizando registro xls " + (i++) + " :: " + rowRecord.toString());
 
-				ValueEqualsRecordPredicate predicate = new ValueEqualsRecordPredicate("CODIGOPROV", providerId).add("ARTICULO", articulo);
+				predicate.put("ARTICULO", articulo);
 				dbfWriter.setPredicate(predicate);
 
 				dbfWriter.updateRecords("PRECIOUNI", rowRecord.get("PRECIOUNI"), true);
-			} catch (DbfWriterException e) {
+			} catch (Exception e) {
 				logger.error("Error al actualizar el registro " + rowRecord.toString());
 			}
 		}// while (rowRecordIterator.hasNext())

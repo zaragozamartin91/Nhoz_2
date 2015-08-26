@@ -40,7 +40,7 @@ public class ValueEqualsRecordPredicate implements RecordPredicate {
 	 *            - valor a testear.
 	 * @return this.
 	 */
-	public ValueEqualsRecordPredicate add(String key, Object value) {
+	public ValueEqualsRecordPredicate put(String key, Object value) {
 		keyValues.put(key, value);
 		return this;
 	}
@@ -74,7 +74,7 @@ public class ValueEqualsRecordPredicate implements RecordPredicate {
 				}
 			}
 
-			Logger.getLogger(getClass()).info("testeo de " + this.toString() + " para " + recordContent.toString() + " paso exitosamente!");
+			Logger.getLogger(getClass()).info("registro "+ recordContent.toString() + " encontrado!");
 
 			return true;
 		} catch (RecordUtilsException e) {

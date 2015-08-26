@@ -25,7 +25,7 @@ public class ValueEqualsRecordPredicateTest extends TestCase {
 		predicate = new ValueEqualsRecordPredicate("SALARY", new Double(123.456));
 		assertTrue(predicate.test(record));
 
-		predicate = new ValueEqualsRecordPredicate("ID", new Integer(1)).add("AGE", new Integer(25));
+		predicate = new ValueEqualsRecordPredicate("ID", new Integer(1)).put("AGE", new Integer(25));
 		assertTrue(predicate.test(record));
 		
 		predicate = new ValueEqualsRecordPredicate("NAME", new String("marton"));

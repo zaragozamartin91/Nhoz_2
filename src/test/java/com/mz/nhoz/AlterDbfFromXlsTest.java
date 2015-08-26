@@ -49,7 +49,7 @@ public class AlterDbfFromXlsTest extends TestCase {
 			}
 
 			String articulo = (String) rowRecord.get("ARTICULO");
-			ValueEqualsRecordPredicate predicate = new ValueEqualsRecordPredicate("CODIGOPROV", codProv).add("ARTICULO", articulo);
+			ValueEqualsRecordPredicate predicate = new ValueEqualsRecordPredicate("CODIGOPROV", codProv).put("ARTICULO", articulo);
 			dbfPredicateWriter.setPredicate(predicate);
 			Double precioUni = (Double) rowRecord.get("PRECIOUNI");
 
