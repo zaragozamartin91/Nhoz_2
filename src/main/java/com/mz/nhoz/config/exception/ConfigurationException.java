@@ -7,4 +7,8 @@ public class ConfigurationException extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
+	public ConfigurationException(String string) {
+		// TODO Auto-generated constructor stub
+	}
+
 }

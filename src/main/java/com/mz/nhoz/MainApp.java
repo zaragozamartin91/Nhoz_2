@@ -5,6 +5,8 @@ import java.io.File;
 import org.apache.log4j.Logger;
 
 import com.mz.nhoz.config.Configuration;
+import com.mz.nhoz.config.FileConfiguration;
+import com.mz.nhoz.config.GuiConfiguration;
 import com.mz.nhoz.config.exception.ConfigurationException;
 import com.mz.nhoz.dbf.DbfPredicateWriter;
 import com.mz.nhoz.dbf.ValueEqualsRecordPredicate;
@@ -31,20 +33,42 @@ public class MainApp {
 		new MainApp().run();
 	}
 
-	public void run() {
-		logger.info("Corriendo nhoz...");
+	private boolean __loadFileConfiguration() {
 		File configFile = new File(CFG_FILE_PATH);
 
 		if (configFile.exists()) {
 			logger.info("Leyendo configuraciones desde " + configFile.getAbsolutePath());
 			try {
-				configuration = new Configuration(configFile);
+				configuration = new FileConfiguration(configFile);
+				configuration.load();
 			} catch (ConfigurationException e) {
 				logger.error("Ocurrió un error durante la carga de configuraciones.", e);
-				return;
+				return false;
 			}
 		} else {
 			logger.error("ARCHIVO DE CONFIGURACION " + configFile.getAbsolutePath() + " NO EXISTE!");
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean __loadGuiConfiguration() {
+		try {
+			this.configuration = new GuiConfiguration();
+			configuration.load();
+		} catch (ConfigurationException e) {
+			logger.error("Ocurrió un error durante la carga de configuraciones.", e);
+			return false;
+		}
+
+		return true;
+	}
+
+	public void run() {
+		logger.info("Corriendo nhoz...");
+		boolean configOk = __loadGuiConfiguration();
+		if (configOk == false) {
 			return;
 		}
 

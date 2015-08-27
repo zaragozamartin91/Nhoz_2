@@ -9,10 +9,13 @@ import junit.framework.TestCase;
 public class ConfigurationTest extends TestCase {
 	public void testLoadConfigFromTxt() throws ConfigurationException {
 		File configFile = new File("testFiles/testLoadConfigFromTxt.txt");
-		Configuration configuration = new Configuration(configFile);
+		FileConfiguration configuration = new FileConfiguration(configFile);
+		configuration.load();
 
-		assertEquals("C:\\Users\\martin.zaragoza\\Documents\\Some folder\\some file.dbf", configuration.getDbfFilePath());
-		assertEquals("C:\\Users\\martin.zaragoza\\Documents\\Some folder\\some file.xls", configuration.getXlsFilePath());
+		assertEquals("C:\\Users\\martin.zaragoza\\Documents\\Some folder\\some file.dbf",
+				configuration.getDbfFilePath());
+		assertEquals("C:\\Users\\martin.zaragoza\\Documents\\Some folder\\some file.xls",
+				configuration.getXlsFilePath());
 		assertEquals("06", configuration.getProviderId());
 	}
 }
