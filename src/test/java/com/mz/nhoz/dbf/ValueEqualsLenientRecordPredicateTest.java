@@ -22,13 +22,13 @@ public class ValueEqualsLenientRecordPredicateTest extends TestCase {
 		RecordPredicate predicate = new ValueEqualsLenientRecordPredicate(recMap);
 		assertTrue(predicate.test(record));
 
-		predicate = new ValueEqualsRecordPredicate("SALARY", new Double(123.456));
+		predicate = new ValueEqualsLenientRecordPredicate("SALARY", new Double(123.456));
 		assertTrue(predicate.test(record));
 
-		predicate = new ValueEqualsRecordPredicate("ID", new Integer(1)).put("AGE", new Integer(25));
+		predicate = new ValueEqualsLenientRecordPredicate("ID", new Integer(1)).put("AGE", new Integer(25));
 		assertTrue(predicate.test(record));
 
-		predicate = new ValueEqualsRecordPredicate("NAME", new String("marton"));
+		predicate = new ValueEqualsLenientRecordPredicate("NAME", new String("marton"));
 		assertFalse(predicate.test(record));
 	}
 
