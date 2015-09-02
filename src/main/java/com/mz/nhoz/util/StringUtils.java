@@ -52,4 +52,16 @@ public class StringUtils {
 			return false;
 		}
 	}// tryCompareObjectsAsStrings
+
+	/**
+	 * Retorna un string nuevo con todos los ceros que lo encabezaban removidos.
+	 * Si el string original es "0" -> se devuelve "0".
+	 * 
+	 * @param s
+	 *            - String a quitar ceros.
+	 * @return Nuevo string sin ceros que lo encabecen.
+	 */
+	public static String removeLeadingZeroes(String s) {
+		return s.replaceFirst("^0+(?!$)", "");
+	}
 }

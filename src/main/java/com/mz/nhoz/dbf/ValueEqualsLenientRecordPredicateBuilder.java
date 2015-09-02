@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.mz.nhoz.dbf.comp.AsDoublesObjectComparator;
 import com.mz.nhoz.dbf.comp.AsIntegersObjectComparator;
+import com.mz.nhoz.dbf.comp.AsStringsIgnoreLeadingZeroesOjectComparator;
 import com.mz.nhoz.dbf.comp.AsStringsObjectComparator;
 import com.mz.nhoz.dbf.comp.StandardObjectComparator;
 
@@ -26,6 +27,7 @@ public class ValueEqualsLenientRecordPredicateBuilder {
 		predicate.addComparator(new AsDoublesObjectComparator());
 		predicate.addComparator(new AsIntegersObjectComparator());
 		predicate.addComparator(new AsStringsObjectComparator());
+		predicate.addComparator(new AsStringsIgnoreLeadingZeroesOjectComparator());
 
 		return predicate;
 	}

@@ -2,16 +2,13 @@ package com.mz.nhoz.dbf;
 
 import java.util.Map;
 
+import junit.framework.TestCase;
 import nl.knaw.dans.common.dbflib.Record;
 
-import com.mz.nhoz.dbf.RecordBuilder;
-import com.mz.nhoz.dbf.RecordPredicate;
-import com.mz.nhoz.dbf.ValueEqualsRecordPredicate;
 import com.mz.nhoz.dbf.exception.RecordBuilderException;
 import com.mz.nhoz.dbf.exception.RecordPredicateException;
 
 import dummy.PersonRecord;
-import junit.framework.TestCase;
 
 public class ValueEqualsLenientRecordPredicateTest extends TestCase {
 
@@ -66,6 +63,25 @@ public class ValueEqualsLenientRecordPredicateTest extends TestCase {
 		predicate = new ValueEqualsLenientRecordPredicate("NAME", new String("marton"));
 		assertFalse(predicate.test(record));
 	}
+	
+	
+	public void testTestWithStringValueTypeAndLeadingZeroesCompare() throws RecordPredicateException, RecordBuilderException {
+		Map<String, Object> recMap = new PersonRecord(1, "0000987/F", 123.456, 25).toMap();
+		Record record = new RecordBuilder(recMap).build();
+
+		RecordPredicate predicate = new ValueEqualsLenientRecordPredicate(recMap);
+		assertTrue(predicate.test(record));
+
+		predicate = __buildLenientPredicate("NAME", new String("987/F"));
+		assertTrue(predicate.test(record));
+
+		predicate = __buildLenientPredicate("NAME", new String("00987/F"));
+		assertTrue(predicate.test(record));
+		
+		predicate = __buildLenientPredicate("NAME", new String("0000987/F"));
+		assertTrue(predicate.test(record));
+	}
+	
 
 	private ValueEqualsLenientRecordPredicate __buildLenientPredicate(String s, Object o) {
 		return new ValueEqualsLenientRecordPredicateBuilder(s, o).buildStandard();
