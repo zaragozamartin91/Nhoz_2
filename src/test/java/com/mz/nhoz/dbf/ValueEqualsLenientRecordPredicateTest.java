@@ -31,7 +31,7 @@ public class ValueEqualsLenientRecordPredicateTest extends TestCase {
 		predicate = new ValueEqualsRecordPredicate("NAME", new String("marton"));
 		assertFalse(predicate.test(record));
 	}
-	
+
 	public void testTestWithStringValueTypeCompare() throws RecordPredicateException, RecordBuilderException {
 		Map<String, Object> recMap = new PersonRecord(1, "martin", 123.456, 25).toMap();
 		Record record = new RecordBuilder(recMap).build();
@@ -39,25 +39,25 @@ public class ValueEqualsLenientRecordPredicateTest extends TestCase {
 		RecordPredicate predicate = new ValueEqualsLenientRecordPredicate(recMap);
 		assertTrue(predicate.test(record));
 
-		predicate = new ValueEqualsLenientRecordPredicate("SALARY", new String("123.456"));
+		predicate = __buildLenientPredicate("SALARY", new String("123.456"));
 		assertTrue(predicate.test(record));
-		
-		predicate = new ValueEqualsLenientRecordPredicate("SALARY", new String("00123.456"));
+
+		predicate = __buildLenientPredicate("SALARY", new String("00123.456"));
 		assertTrue(predicate.test(record));
-		
-		predicate = new ValueEqualsLenientRecordPredicate("SALARY", new String("123.456"));
+
+		predicate = __buildLenientPredicate("SALARY", new String("123.456"));
 		assertTrue(predicate.test(record));
-		
-		predicate = new ValueEqualsLenientRecordPredicate("SALARY", new String("123"));
+
+		predicate = __buildLenientPredicate("SALARY", new String("123"));
 		assertTrue(predicate.test(record));
-		
-		predicate = new ValueEqualsLenientRecordPredicate("SALARY", new Integer(123));
+
+		predicate = __buildLenientPredicate("SALARY", new Integer(123));
 		assertTrue(predicate.test(record));
-		
-		predicate = new ValueEqualsLenientRecordPredicate("SALARY", new Double(123));
+
+		predicate = __buildLenientPredicate("SALARY", new Double(123));
 		assertTrue(predicate.test(record));
-		
-		predicate = new ValueEqualsLenientRecordPredicate("SALARY", new Double(123.456));
+
+		predicate = __buildLenientPredicate("SALARY", new Double(123.456));
 		assertTrue(predicate.test(record));
 
 		predicate = new ValueEqualsLenientRecordPredicate("ID", new Integer(1)).put("AGE", new Integer(25));
@@ -67,4 +67,7 @@ public class ValueEqualsLenientRecordPredicateTest extends TestCase {
 		assertFalse(predicate.test(record));
 	}
 
+	private ValueEqualsLenientRecordPredicate __buildLenientPredicate(String s, Object o) {
+		return new ValueEqualsLenientRecordPredicateBuilder(s, o).buildStandard();
+	}
 }

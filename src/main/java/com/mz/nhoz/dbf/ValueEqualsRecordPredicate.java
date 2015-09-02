@@ -19,7 +19,7 @@ import nl.knaw.dans.common.dbflib.Record;
  *
  */
 public class ValueEqualsRecordPredicate implements RecordPredicate {
-	private Map<String, Object> keyValues = new HashMap<String, Object>();
+	protected Map<String, Object> keyValues = new HashMap<String, Object>();
 
 	public ValueEqualsRecordPredicate(Map<String, Object> keyValues) {
 		super();

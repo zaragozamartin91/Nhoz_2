@@ -2,7 +2,7 @@ package com.mz.nhoz.dbf.comp;
 
 import com.mz.nhoz.util.NumberUtils;
 
-public class AsDoublesObjectComparator implements ObjectComparator {
+public class AsDoublesObjectComparator extends ObjectComparator {
 
 	@Override
 	public boolean compare(Object first, Object second) {
@@ -12,5 +12,4 @@ public class AsDoublesObjectComparator implements ObjectComparator {
 			return false;
 		}
 	}
-
 }

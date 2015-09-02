@@ -1,6 +1,6 @@
 package com.mz.nhoz.dbf.comp;
 
-public class StandardObjectComparator implements ObjectComparator {
+public class StandardObjectComparator extends ObjectComparator {
 	@Override
 	public boolean compare(Object first, Object second) {
 		try {
