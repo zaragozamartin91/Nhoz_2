@@ -12,6 +12,9 @@ public class NumberUtilsTest extends TestCase {
 		intval = NumberUtils.parseUsLocaleNumberStringAsInteger("123.0");
 		assertEquals(new Integer(123), intval);
 
+		intval = NumberUtils.parseUsLocaleNumberStringAsInteger("123");
+		assertEquals(new Integer(123), intval);
+
 		assertEquals("123", intval.toString());
 	}
 
@@ -23,7 +26,7 @@ public class NumberUtilsTest extends TestCase {
 
 			assertEquals("000123", s_integer);
 		}
-		
+
 		{
 			Integer integer = 123456;
 			int digitCount = 6;
@@ -31,7 +34,7 @@ public class NumberUtilsTest extends TestCase {
 
 			assertEquals("123456", s_integer);
 		}
-		
+
 		{
 			Integer integer = 12345678;
 			int digitCount = 6;
@@ -39,5 +42,24 @@ public class NumberUtilsTest extends TestCase {
 
 			assertEquals("12345678", s_integer);
 		}
+	}
+
+	public void testTryCompareObjectsAsIntegers() {
+		String first = new String("1234");
+		String second = new String("1234");
+		assertTrue(NumberUtils.tryCompareObjectsAsIntegers(first, second));
+
+		first = new String("1234");
+		second = new String("001234");
+		assertTrue(NumberUtils.tryCompareObjectsAsIntegers(first, second));
+
+		first = new String("01234");
+		second = new String("001234");
+		assertTrue(NumberUtils.tryCompareObjectsAsIntegers(first, second));
+
+		first = new String("91234");
+		second = new String("001234");
+		assertFalse(NumberUtils.tryCompareObjectsAsIntegers(first, second));
+
 	}
 }

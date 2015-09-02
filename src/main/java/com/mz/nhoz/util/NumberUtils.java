@@ -43,4 +43,24 @@ public class NumberUtils {
 
 		return stringBuilder.toString();
 	}
+
+	/**
+	 * Intenta comparar dos objetos como numeros enteros.
+	 * 
+	 * @param first
+	 *            - Primer objeto.
+	 * @param second
+	 *            - Segundo objeto.
+	 * @return True en caso que los objetos puedan representarse como numeros
+	 *         enteros y coincidan en valor, false en caso contrario.
+	 */
+	public static boolean tryCompareObjectsAsIntegers(Object first, Object second) {
+		try {
+			final Integer n_first = parseUsLocaleNumberStringAsInteger(first.toString().trim());
+			final Integer n_second = parseUsLocaleNumberStringAsInteger(second.toString().trim());
+			return n_first.equals(n_second);
+		} catch (Exception e) {
+			return false;
+		}
+	}//tryCompareObjectsAsIntegers
 }
