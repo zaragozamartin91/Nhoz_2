@@ -18,6 +18,17 @@ public class NumberUtilsTest extends TestCase {
 		assertEquals("123", intval.toString());
 	}
 
+	public void testparseUsLocaleNumberStringAsDouble() throws NumberUtilsException {
+		Double doubleVal = NumberUtils.parseUsLocaleNumberStringAsDouble("123.76");
+		assertEquals(new Double(123.76), doubleVal);
+		
+		doubleVal = NumberUtils.parseUsLocaleNumberStringAsDouble("123");
+		assertEquals(new Double(123), doubleVal);
+		
+		doubleVal = NumberUtils.parseUsLocaleNumberStringAsDouble("123.0");
+		assertEquals(new Double(123.0), doubleVal);
+	}
+
 	public void testparseIntegerAsString() {
 		{
 			Integer integer = 123;
@@ -62,4 +73,5 @@ public class NumberUtilsTest extends TestCase {
 		assertFalse(NumberUtils.tryCompareObjectsAsIntegers(first, second));
 
 	}
+
 }

@@ -29,4 +29,27 @@ public class StringUtils {
 
 		return new StringPair(first, second);
 	}
+
+	/**
+	 * Intenta comparar dos objetos como strings aplicando trim antes de
+	 * comparar.
+	 * 
+	 * @param first
+	 *            - Primer objeto.
+	 * @param second
+	 *            - Segundo objeto.
+	 * @return Si el contenido de <code>first.toString().trim()</code> coincide
+	 *         con el de <code>second.toString().trim()</code> , false en caso
+	 *         contrario.
+	 */
+	public static boolean tryCompareObjectsAsStrings(Object first, Object second) {
+		try {
+			final String s_recordValue = first.toString().trim();
+			final String s_compareValue = second.toString().trim();
+
+			return s_compareValue.contentEquals(s_recordValue);
+		} catch (Exception e) {
+			return false;
+		}
+	}// tryCompareObjectsAsStrings
 }
