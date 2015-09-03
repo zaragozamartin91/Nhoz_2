@@ -42,7 +42,8 @@ public class ExcelReaderTest extends TestCase {
 	}
 
 	public void testGetTableHeaderWithBlanks() throws ExcelReaderException {
-		System.out.println("testGetTableHeaderWithBlanks------------------------------------------------------------------------------");
+		System.out
+				.println("testGetTableHeaderWithBlanks------------------------------------------------------------------------------");
 		ExcelReader excelReader = new ExcelReader(new File("testFiles/testGetTableHeaderWithBlanks.xls"));
 
 		TableHeader tableHeader = excelReader.getTableHeader();
@@ -63,12 +64,12 @@ public class ExcelReaderTest extends TestCase {
 
 		// nombre apellido dni sueldo nacimiento
 		List<Map<String, Object>> expectedRecords = new ArrayList<Map<String, Object>>();
-		expectedRecords.add(new MapBuilder().put("nombre", "martin").put("apellido", "zaragoza").put("dni", new Double(35657201))
-				.put("sueldo", new Double(9000.12)).build());
-		expectedRecords.add(new MapBuilder().put("nombre", "mateo").put("apellido", "zaragoza").put("dni", new Double(36123456))
-				.put("sueldo", new Double(9877.45)).build());
-		expectedRecords.add(new MapBuilder().put("nombre", "sonia").put("apellido", "esposito").put("dni", new Double(16528483))
-				.put("sueldo", new Double(7987.12)).build());
+		expectedRecords.add(new MapBuilder().put("nombre", "martin").put("apellido", "zaragoza")
+				.put("dni", new Double(35657201)).put("sueldo", new Double(9000.12)).build());
+		expectedRecords.add(new MapBuilder().put("nombre", "mateo").put("apellido", "zaragoza")
+				.put("dni", new Double(36123456)).put("sueldo", new Double(9877.45)).build());
+		expectedRecords.add(new MapBuilder().put("nombre", "sonia").put("apellido", "esposito")
+				.put("dni", new Double(16528483)).put("sueldo", new Double(7987.12)).build());
 		int index = 0;
 
 		while (rowRecordIterator.hasNext()) {
@@ -81,6 +82,21 @@ public class ExcelReaderTest extends TestCase {
 			System.out.println(rowRecord.toString());
 		}
 	}// testRowRecordIterator
+
+	public void testReadXlsWithTextPrices() throws ExcelReaderException {
+		System.out
+				.println("testReadXlsWithTextPrices-----------------------------------------------------------------------------");
+		ExcelReader excelReader = new ExcelReader(new File("testFiles/priceAsText.xlsx"));
+		RowRecordIterator rowRecordIterator = excelReader.rowRecordIterator();
+
+		int i = 0;
+
+		while (rowRecordIterator.hasNext() && (++i) < 5) {
+			RowRecord rowRecord = (RowRecord) rowRecordIterator.next();
+			System.out.println(rowRecord.toString());
+		}
+		
+	}
 
 	public void testOpenWrongTypeFile() {
 		try {

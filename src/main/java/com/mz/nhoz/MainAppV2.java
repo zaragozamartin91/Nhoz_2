@@ -11,6 +11,7 @@ import com.mz.nhoz.dbf.DbfPredicateWriter;
 import com.mz.nhoz.dbf.ValueEqualsLenientRecordPredicateBuilder;
 import com.mz.nhoz.dbf.ValueEqualsRecordPredicate;
 import com.mz.nhoz.dbf.exception.DbfManagerException;
+import com.mz.nhoz.util.NumberUtils;
 import com.mz.nhoz.util.StringUtils;
 import com.mz.nhoz.xls.ExcelReader;
 import com.mz.nhoz.xls.RowRecord;
@@ -32,7 +33,7 @@ public class MainAppV2 {
 
 	private boolean __loadGuiConfiguration() {
 		try {
-//			this.configuration = new GuiConfiguration();
+			// this.configuration = new GuiConfiguration();
 			this.configuration = new GuiConfigurationNoArticleDigits();
 			configuration.load();
 		} catch (ConfigurationException e) {
@@ -79,7 +80,8 @@ public class MainAppV2 {
 		try {
 			__alterDbf();
 		} catch (ExcelReaderException e1) {
-			logger.error("Ocurrió un error durante la modificación del archivo dbf " + configuration.getDbfFilePath(), e1);
+			logger.error("Ocurrió un error durante la modificación del archivo dbf " + configuration.getDbfFilePath(),
+					e1);
 			return;
 		}
 
@@ -97,7 +99,8 @@ public class MainAppV2 {
 		int i = 0;
 		// ValueEqualsRecordPredicate predicate = new
 		// ValueEqualsRecordPredicate("CODIGOPROV", providerId);
-		ValueEqualsRecordPredicate predicate = new ValueEqualsLenientRecordPredicateBuilder("CODIGOPROV", providerId).buildStandard();
+		ValueEqualsRecordPredicate predicate = new ValueEqualsLenientRecordPredicateBuilder("CODIGOPROV", providerId)
+				.buildStandard();
 
 		while (rowRecordIterator.hasNext()) {
 			RowRecord rowRecord = (RowRecord) rowRecordIterator.next();
@@ -120,7 +123,9 @@ public class MainAppV2 {
 				predicate.put(ARTICULO_KEY, s_articulo);
 				dbfWriter.setPredicate(predicate);
 
-				dbfWriter.updateRecords(PRECIOUNI_KEY, o_preciouni, true);
+				// dbfWriter.updateRecords(PRECIOUNI_KEY, o_preciouni, true);
+				Double d_preciouni = NumberUtils.parseUsLocaleNumberStringAsDouble(o_preciouni.toString().trim());
+				dbfWriter.updateRecords(PRECIOUNI_KEY, d_preciouni, true);
 			} catch (Exception e) {
 				logger.error("Error al actualizar el registro " + rowRecord.toString() + "::excepcion::" + e.toString());
 			}

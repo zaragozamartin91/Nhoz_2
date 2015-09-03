@@ -1,5 +1,8 @@
 package com.mz.nhoz.util;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 public class StringUtils {
@@ -63,5 +66,36 @@ public class StringUtils {
 	 */
 	public static String removeLeadingZeroes(String s) {
 		return s.replaceFirst("^0+(?!$)", "");
+	}
+
+	/**
+	 * Remueve el simbolo de precio al principio del string.
+	 * 
+	 * @param s
+	 *            - String a parsear.
+	 * @return String con precio removido.
+	 */
+	public static String removePriceSymbol(String s) {
+		s = s.trim();
+		String ss = s.replaceAll("\\$ {0,}", "");
+		return ss.trim();
+	}
+
+	/**
+	 * Parsea un string en formato precio como un double.
+	 * 
+	 * @param s
+	 * @return
+	 * @throws ParseException 
+	 */
+	public static Double parsePriceAsDouble(String s) throws ParseException {
+		String ss = removePriceSymbol(s);
+
+		NumberFormat format = NumberFormat.getInstance(Locale.US);
+		Number number = format.parse(ss);
+
+		Double d = number.doubleValue();
+
+		return d;
 	}
 }
