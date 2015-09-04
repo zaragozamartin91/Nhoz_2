@@ -21,12 +21,22 @@ public class NumberUtilsTest extends TestCase {
 	public void testparseUsLocaleNumberStringAsDouble() throws NumberUtilsException {
 		Double doubleVal = NumberUtils.parseUsLocaleNumberStringAsDouble("123.76");
 		assertEquals(new Double(123.76), doubleVal);
-		
+
 		doubleVal = NumberUtils.parseUsLocaleNumberStringAsDouble("123");
 		assertEquals(new Double(123), doubleVal);
-		
+
 		doubleVal = NumberUtils.parseUsLocaleNumberStringAsDouble("123.0");
 		assertEquals(new Double(123.0), doubleVal);
+
+		Double d = Double.valueOf("123.25");
+		d = Double.valueOf("123.0");
+		d = Double.valueOf("123");
+
+		try {
+			doubleVal = NumberUtils.parseUsLocaleNumberStringAsDouble("01-001");
+			fail();
+		} catch (Exception e) {
+		}
 	}
 
 	public void testparseIntegerAsString() {

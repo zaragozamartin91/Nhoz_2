@@ -6,6 +6,14 @@ import java.util.Locale;
 import com.mz.nhoz.util.exception.NumberUtilsException;
 
 public class NumberUtils {
+	/**
+	 * @deprecated - No funciona como se esperaba. Parsea valores como
+	 *             "01-1234-02" como 1 lo cual no es deseado.
+	 * 
+	 * @param s
+	 * @return
+	 * @throws NumberUtilsException
+	 */
 	public static Number parseUsLocaleNumberStringAsNumber(String s) throws NumberUtilsException {
 		try {
 			NumberFormat format = NumberFormat.getInstance(Locale.US);
@@ -29,7 +37,8 @@ public class NumberUtils {
 	 */
 	public static Integer parseUsLocaleNumberStringAsInteger(String s) throws NumberUtilsException {
 		try {
-			return parseUsLocaleNumberStringAsNumber(s).intValue();
+			// return parseUsLocaleNumberStringAsNumber(s).intValue();
+			return Double.valueOf(s).intValue();
 		} catch (Exception e) {
 			throw new NumberUtilsException(e);
 		}
@@ -47,7 +56,8 @@ public class NumberUtils {
 	 */
 	public static Double parseUsLocaleNumberStringAsDouble(String s) throws NumberUtilsException {
 		try {
-			return parseUsLocaleNumberStringAsNumber(s).doubleValue();
+			// return parseUsLocaleNumberStringAsNumber(s).doubleValue();
+			return Double.valueOf(s);
 		} catch (Exception e) {
 			throw new NumberUtilsException(e);
 		}
@@ -102,12 +112,14 @@ public class NumberUtils {
 	 */
 	public static boolean tryCompareObjectsAsDoubles(Object first, Object second) {
 		try {
-			final Double n_first = parseUsLocaleNumberStringAsDouble(first.toString().trim());
-			final Double n_second = parseUsLocaleNumberStringAsDouble(second.toString().trim());
+			final String s_first = first.toString().trim();
+			final String s_second = second.toString().trim();
+			final Double n_first = parseUsLocaleNumberStringAsDouble(s_first);
+			final Double n_second = parseUsLocaleNumberStringAsDouble(s_second);
 			return n_first.equals(n_second);
 		} catch (Exception e) {
 			return false;
 		}
 	}// tryCompareObjectsAsIntegers
-	
+
 }

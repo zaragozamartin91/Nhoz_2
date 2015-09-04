@@ -12,7 +12,6 @@ import com.mz.nhoz.dbf.ValueEqualsLenientRecordPredicateBuilder;
 import com.mz.nhoz.dbf.ValueEqualsRecordPredicate;
 import com.mz.nhoz.dbf.exception.DbfManagerException;
 import com.mz.nhoz.util.MoneyUtils;
-import com.mz.nhoz.util.NumberUtils;
 import com.mz.nhoz.util.StringUtils;
 import com.mz.nhoz.xls.ExcelReader;
 import com.mz.nhoz.xls.RowRecord;
@@ -96,7 +95,7 @@ public class MainAppV3 {
 
 	private void __alterDbf() throws ExcelReaderException {
 		RowRecordIterator rowRecordIterator = excelReader.rowRecordIterator();
-		int i = 0;
+		int parsedRecords = 0;
 		// ValueEqualsRecordPredicate predicate = new
 		// ValueEqualsRecordPredicate("CODIGOPROV", providerId);
 		ValueEqualsRecordPredicate predicate = new ValueEqualsLenientRecordPredicateBuilder("CODIGOPROV", providerId).buildStandard();
@@ -116,16 +115,22 @@ public class MainAppV3 {
 				}
 
 				String s_articulo = o_articulo.toString();
-				logger.info("Analizando registro xls " + (i++) + " :: " + rowRecord.toString());
+				logger.info("Analizando registro xls " + (parsedRecords++) + " :: " + rowRecord.toString());
 
 				predicate.put(ARTICULO_KEY, s_articulo);
 				dbfWriter.setPredicate(predicate);
 
 				Double d_preciouni = MoneyUtils.parsePriceAsDouble(o_preciouni);
 				dbfWriter.updateRecords(PRECIOUNI_KEY, d_preciouni, true);
+
 			} catch (Exception e) {
-				logger.error("Error al actualizar el registro " + rowRecord.toString() + "::excepcion::" + e.toString());
+				logger.error("Error al leer/actualizar el registro " + rowRecord.toString() + "::excepcion::" + e.toString());
 			}
 		}// while (rowRecordIterator.hasNext())
+
+		if (parsedRecords == 0) {
+			logger.error("NO SE ENCONTRARON REGISTROS VALIDOS EN EL EXCEL. ");
+			logger.error("VERIFIQUE FORMATO DEL ARCHIVO EXCEL Y TITULOS DE LAS COLUMNAS. ");
+		}
 	}// __alterDbf
 }// MainApp
