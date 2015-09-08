@@ -9,5 +9,5 @@ Class-Path: . nhoz_lib/dans-dbf-lib-1.0.0-beta-10.jar nhoz_lib/dom4j-1
  z_lib/spring-expression-4.1.6.RELEASE.jar nhoz_lib/spring-core-4.1.6.
  RELEASE.jar nhoz_lib/commons-logging-1.2.jar nhoz_lib/log4j-1.2.17.ja
  r
-Main-Class: com.mz.nhoz.MainAppV3
+Main-Class: com.mz.nhoz.MainAppV4
 
