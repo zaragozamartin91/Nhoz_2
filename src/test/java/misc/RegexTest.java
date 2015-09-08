@@ -96,8 +96,18 @@ public class RegexTest extends TestCase {
 		assertFalse("123..12".matches(doubleRegexNoE));
 		assertFalse("--123.12".matches(doubleRegexNoE));
 		assertFalse("2207D".matches(doubleRegexNoE));
-		
+
 		assertFalse("123.0E12".matches(doubleRegexNoE));
 
+	}
+
+	public void testCheckMoneyRegex() {
+		String doubleRegexNoE = "[-+]?[0-9]*\\.?[0-9]+";
+
+		Matcher matcher = Pattern.compile(doubleRegexNoE).matcher("$ 123.220");
+		while (matcher.find()) {
+			String match = matcher.group();
+			assertEquals("123.220", match);
+		}
 	}
 }
