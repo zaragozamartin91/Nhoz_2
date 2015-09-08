@@ -63,25 +63,39 @@ public class ValueEqualsLenientRecordPredicateTest extends TestCase {
 		predicate = new ValueEqualsLenientRecordPredicate("NAME", new String("marton"));
 		assertFalse(predicate.test(record));
 	}
-	
-	
+
 	public void testTestWithStringValueTypeAndLeadingZeroesCompare() throws RecordPredicateException, RecordBuilderException {
-		Map<String, Object> recMap = new PersonRecord(1, "0000987/F", 123.456, 25).toMap();
-		Record record = new RecordBuilder(recMap).build();
+		// 2207D
+		{
+			Map<String, Object> recMap = new PersonRecord(1, "0000987/F", 123.456, 25).toMap();
+			Record record = new RecordBuilder(recMap).build();
 
-		RecordPredicate predicate = new ValueEqualsLenientRecordPredicate(recMap);
-		assertTrue(predicate.test(record));
+			RecordPredicate predicate = new ValueEqualsLenientRecordPredicate(recMap);
+			assertTrue(predicate.test(record));
 
-		predicate = __buildLenientPredicate("NAME", new String("987/F"));
-		assertTrue(predicate.test(record));
+			predicate = __buildLenientPredicate("NAME", new String("987/F"));
+			assertTrue(predicate.test(record));
 
-		predicate = __buildLenientPredicate("NAME", new String("00987/F"));
-		assertTrue(predicate.test(record));
+			predicate = __buildLenientPredicate("NAME", new String("00987/F"));
+			assertTrue(predicate.test(record));
+
+			predicate = __buildLenientPredicate("NAME", new String("0000987/F"));
+			assertTrue(predicate.test(record));
+		}
 		
-		predicate = __buildLenientPredicate("NAME", new String("0000987/F"));
-		assertTrue(predicate.test(record));
+		{
+			Map<String, Object> recMap = new PersonRecord(1, "2207", 123.456, 25).toMap();
+			Record record = new RecordBuilder(recMap).build();
+
+			RecordPredicate predicate = new ValueEqualsLenientRecordPredicate(recMap);
+			assertTrue(predicate.test(record));
+
+			predicate = __buildLenientPredicate("NAME", new String("2207D"));
+			boolean test = predicate.test(record);
+			assertFalse(test);
+
+		}
 	}
-	
 
 	private ValueEqualsLenientRecordPredicate __buildLenientPredicate(String s, Object o) {
 		return new ValueEqualsLenientRecordPredicateBuilder(s, o).buildStandard();

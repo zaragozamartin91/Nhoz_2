@@ -9,6 +9,7 @@ import nl.knaw.dans.common.dbflib.Record;
 
 import com.mz.nhoz.dbf.exception.DbfWriterException;
 import com.mz.nhoz.dbf.util.RecordUtils;
+import org.apache.log4j.Logger;
 
 public class DbfPredicateWriter extends DbfWriter {
 	private RecordPredicate predicate;
@@ -68,17 +69,18 @@ public class DbfPredicateWriter extends DbfWriter {
 			Iterator<Record> recordIterator = getTable().recordIterator();
 			int index = 0;
 			int updatedCount = 0;
+			final Logger LOGGER = Logger.getLogger(getClass());
 
 			while (recordIterator.hasNext()) {
 				Record record = (Record) recordIterator.next();
 
 				if (predicate.test(record)) {
+					LOGGER.info("REGISTRO ENCONTRADO: " + RecordUtils.toString(record));
 					Record record__ = new RecordBuilder(record).putAll(valueMap).build();
+					LOGGER.info("INSERTANDO/ ACTUALIZANDO: " + RecordUtils.toString(record__));
 
-					if (RecordUtils.equals(record, record__) == false) {
-						this.updateRecord(record__, index);
-						updatedCount++;
-					}
+					this.updateRecord(record__, index);
+					updatedCount++;
 
 					if (oneRecord) {
 						return updatedCount;

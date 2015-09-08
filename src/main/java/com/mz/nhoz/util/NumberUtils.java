@@ -6,6 +6,8 @@ import java.util.Locale;
 import com.mz.nhoz.util.exception.NumberUtilsException;
 
 public class NumberUtils {
+	public static final String DOUBLE_REGEX = "[-+]?[0-9]*\\.?[0-9]+";
+
 	/**
 	 * @deprecated - No funciona como se esperaba. Parsea valores como
 	 *             "01-1234-02" como 1 lo cual no es deseado.
@@ -37,8 +39,11 @@ public class NumberUtils {
 	 */
 	public static Integer parseUsLocaleNumberStringAsInteger(String s) throws NumberUtilsException {
 		try {
-			// return parseUsLocaleNumberStringAsNumber(s).intValue();
-			return Double.valueOf(s).intValue();
+			if (s.matches(DOUBLE_REGEX)) {
+				return Double.valueOf(s).intValue();
+			} else {
+				throw new NumberFormatException("Error durante parseo de " + s + " como un Double a partir de " + DOUBLE_REGEX);
+			}
 		} catch (Exception e) {
 			throw new NumberUtilsException(e);
 		}
@@ -56,8 +61,11 @@ public class NumberUtils {
 	 */
 	public static Double parseUsLocaleNumberStringAsDouble(String s) throws NumberUtilsException {
 		try {
-			// return parseUsLocaleNumberStringAsNumber(s).doubleValue();
-			return Double.valueOf(s);
+			if (s.matches(DOUBLE_REGEX)) {
+				return Double.valueOf(s);
+			} else {
+				throw new NumberFormatException("Error durante parseo de " + s + " como un Double a partir de " + DOUBLE_REGEX);
+			}
 		} catch (Exception e) {
 			throw new NumberUtilsException(e);
 		}

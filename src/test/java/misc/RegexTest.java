@@ -1,5 +1,8 @@
 package misc;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.mz.nhoz.util.StringUtils;
 
 import junit.framework.TestCase;
@@ -46,17 +49,55 @@ public class RegexTest extends TestCase {
 			String ss = s.replaceAll("\\$ {0,}", "");
 			assertEquals("150.8000", ss);
 		}
-		
+
 		{
 			String s = "$      150.8000";
 			String ss = s.replaceAll("\\$ {0,}", "");
 			assertEquals("150.8000", ss);
 		}
-		
+
 		{
 			String s = "150.8000";
 			String ss = s.replaceAll("\\$ {0,}", "");
 			assertEquals("150.8000", ss);
 		}
+	}
+
+	public void testNumberRegex() {
+		String doubleRegex = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
+		String doubleRegexNoE = "[-+]?[0-9]*\\.?[0-9]+";
+
+		assertTrue("-123.456".matches(doubleRegex));
+		assertTrue("-123".matches(doubleRegex));
+		assertTrue("123.456".matches(doubleRegex));
+		assertTrue("123".matches(doubleRegex));
+		assertTrue("+123.456".matches(doubleRegex));
+		assertTrue("+123".matches(doubleRegex));
+		assertTrue("123.00000".matches(doubleRegex));
+		assertTrue("123.0".matches(doubleRegex));
+
+		assertFalse("123..12".matches(doubleRegex));
+		assertFalse("--123.12".matches(doubleRegex));
+		assertFalse("2207D".matches(doubleRegex));
+
+		assertTrue("123.0E12".matches(doubleRegex));
+
+		/* probando doubleRegexNoE-------------------------------------------- */
+
+		assertTrue("-123.456".matches(doubleRegexNoE));
+		assertTrue("-123".matches(doubleRegexNoE));
+		assertTrue("123.456".matches(doubleRegexNoE));
+		assertTrue("123".matches(doubleRegexNoE));
+		assertTrue("+123.456".matches(doubleRegexNoE));
+		assertTrue("+123".matches(doubleRegexNoE));
+		assertTrue("123.00000".matches(doubleRegexNoE));
+		assertTrue("123.0".matches(doubleRegexNoE));
+
+		assertFalse("123..12".matches(doubleRegexNoE));
+		assertFalse("--123.12".matches(doubleRegexNoE));
+		assertFalse("2207D".matches(doubleRegexNoE));
+		
+		assertFalse("123.0E12".matches(doubleRegexNoE));
+
 	}
 }

@@ -16,6 +16,19 @@ public class NumberUtilsTest extends TestCase {
 		assertEquals(new Integer(123), intval);
 
 		assertEquals("123", intval.toString());
+
+		try {
+			Integer.valueOf("2207D", 10);
+			fail("Expected NumberFormatException when parsing 2207D as a 10 radix Integer using valueOf");
+		} catch (NumberFormatException e1) {
+		}
+
+		try {
+			intval = NumberUtils.parseUsLocaleNumberStringAsInteger("2207D");
+			fail("Exception expected when parsing 2207D as Integer...");
+		} catch (Exception e) {
+		}
+
 	}
 
 	public void testparseUsLocaleNumberStringAsDouble() throws NumberUtilsException {
@@ -35,6 +48,12 @@ public class NumberUtilsTest extends TestCase {
 		try {
 			doubleVal = NumberUtils.parseUsLocaleNumberStringAsDouble("01-001");
 			fail();
+		} catch (Exception e) {
+		}
+
+		try {
+			doubleVal = NumberUtils.parseUsLocaleNumberStringAsDouble("2207D");
+			fail("Exception expected when parsing 2207D as Double...");
 		} catch (Exception e) {
 		}
 	}

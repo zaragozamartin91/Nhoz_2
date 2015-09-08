@@ -85,7 +85,7 @@ public class ValueEqualsLenientRecordPredicate extends ValueEqualsRecordPredicat
 				}
 			}
 
-			Logger.getLogger(getClass()).info("registro " + recordContent.toString() + " encontrado!");
+//			Logger.getLogger(getClass()).info("registro " + recordContent.toString() + " encontrado!");
 
 			return true;
 		} catch (RecordUtilsException e) {
