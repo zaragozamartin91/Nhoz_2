@@ -1,5 +1,7 @@
 package com.mz.nhoz.config;
 
+import java.util.Locale;
+
 import com.mz.nhoz.config.exception.ConfigurationException;
 
 public interface Configuration {
@@ -14,4 +16,6 @@ public interface Configuration {
 	public String getProviderId();
 
 	public Integer getArticleDigits();
+
+	Locale getNumberLocale();
 }

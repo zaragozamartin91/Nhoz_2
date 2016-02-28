@@ -1,6 +1,7 @@
 package com.mz.nhoz.util;
 
 import java.text.ParseException;
+import java.util.Locale;
 
 import com.mz.nhoz.util.exception.MoneyUtilsException;
 
@@ -35,5 +36,27 @@ public class MoneyUtilsTest extends TestCase {
 
 		d = -123.345;
 		assertEquals(d, MoneyUtils.parsePriceAsDouble(d));
+	}
+
+	public void testReplaceCommaWithDot() throws MoneyUtilsException {
+		assertEquals("-123.456", MoneyUtils.replaceCommaWithDot("-123,456"));
+		assertEquals("-123.456", MoneyUtils.replaceCommaWithDot("-123.456"));
+		assertEquals("  $ -123.456", MoneyUtils.replaceCommaWithDot("  $ -123,456"));
+		
+		assertEquals("123.456", MoneyUtils.replaceCommaWithDot("123,456"));
+		assertEquals("123.456", MoneyUtils.replaceCommaWithDot("123.456"));
+		assertEquals("  $ 123.456", MoneyUtils.replaceCommaWithDot("  $ 123,456"));
+		
+		assertEquals("123", MoneyUtils.replaceCommaWithDot("123"));
+		assertEquals("123", MoneyUtils.replaceCommaWithDot("123"));
+		assertEquals("  $ 123", MoneyUtils.replaceCommaWithDot("  $ 123"));
+	}
+	
+	public void testParseWithDifferentLocales() throws MoneyUtilsException{
+		assertEquals( new Double(1234.23) , MoneyUtils.parsePriceAsDouble("$1,234.23", Locale.US) );
+		assertEquals( new Double(19234.23) , MoneyUtils.parsePriceAsDouble("$   19,234.23", Locale.US) );
+		
+		assertEquals( new Double(1234.23) , MoneyUtils.parsePriceAsDouble("$1.234,23", Locale.ITALY) );
+		assertEquals( new Double(19234.23) , MoneyUtils.parsePriceAsDouble("$   19.234,23", Locale.ITALY) );
 	}
 }

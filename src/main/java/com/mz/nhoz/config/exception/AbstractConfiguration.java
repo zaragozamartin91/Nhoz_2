@@ -1,17 +1,15 @@
 package com.mz.nhoz.config.exception;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Locale;
 
-import com.google.gson.Gson;
 import com.mz.nhoz.config.Configuration;
-import com.mz.nhoz.util.MapBuilder;
 
 public abstract class AbstractConfiguration implements Configuration {
 	protected String dbfFilePath = "C:\\Martin\\LISTAPRE.DBF";
 	protected String xlsFilePath = "C:\\Xls\\PROVEEDOR.xls";
 	protected String providerId = null;
 	protected Integer articleDigits = ANY_DIGITS;
+	protected Locale numberLocale = Locale.US;
 
 	public String getDbfFilePath() {
 		return dbfFilePath;
@@ -45,10 +43,18 @@ public abstract class AbstractConfiguration implements Configuration {
 		this.articleDigits = articleDigits;
 	}
 
+	@Override
+	public Locale getNumberLocale() {
+		return numberLocale;
+	}
+
+	public void setNumberLocale(Locale numberLocale) {
+		this.numberLocale = numberLocale;
+	}
+
+	@Override
 	public String toString() {
-		MapBuilder mapBuilder = new MapBuilder();
-		Map map = mapBuilder.put("dbfFilePath", dbfFilePath).put("xlsFilePath", xlsFilePath)
-				.put("providerId", providerId).put("articleDigits", articleDigits).build();
-		return new Gson().toJson(map);
+		return "AbstractConfiguration [dbfFilePath=" + dbfFilePath + ", xlsFilePath=" + xlsFilePath + ", providerId="
+				+ providerId + ", articleDigits=" + articleDigits + ", numberLocale=" + numberLocale + "]";
 	}
 }

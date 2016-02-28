@@ -6,4 +6,8 @@ public class MoneyUtilsException extends Exception {
 		super(string);
 	}
 
+	public MoneyUtilsException(Exception e) {
+		super(e);
+	}
+
 }

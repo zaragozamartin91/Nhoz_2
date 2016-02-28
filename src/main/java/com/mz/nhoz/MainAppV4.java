@@ -141,7 +141,8 @@ public class MainAppV4 {
 				predicate.put(ARTICULO_KEY, s_articulo);
 				dbfWriter.setPredicate(predicate);
 
-				Double d_preciouni = MoneyUtils.parsePriceAsDouble(o_preciouni);
+//				Double d_preciouni = MoneyUtils.parsePriceAsDouble(o_preciouni);
+				Double d_preciouni = MoneyUtils.parsePriceAsDouble(o_preciouni,configuration.getNumberLocale());
 				dbfWriter.updateRecords(PRECIOUNI_KEY, d_preciouni, true);
 
 			} catch (Exception e) {

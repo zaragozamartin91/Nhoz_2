@@ -1,9 +1,12 @@
 package misc;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.mz.nhoz.util.MoneyUtils;
 import com.mz.nhoz.util.StringUtils;
+import com.mz.nhoz.util.exception.MoneyUtilsException;
 
 import junit.framework.TestCase;
 
@@ -108,6 +111,34 @@ public class RegexTest extends TestCase {
 		while (matcher.find()) {
 			String match = matcher.group();
 			assertEquals("123.220", match);
+		}
+	}
+
+	public void testCheckMoneyLenientRegex() throws MoneyUtilsException {
+		String doubleRegexNoE = "[-+]?[0-9]*[\\.,]?[0-9]+[\\.,]?[0-9]*";
+
+		{
+			Matcher matcher = Pattern.compile(doubleRegexNoE).matcher("$ 123.220");
+			while (matcher.find()) {
+				String match = matcher.group();
+				assertEquals("123.220", match);
+			}
+		}
+		
+		{
+			Matcher matcher = Pattern.compile(doubleRegexNoE).matcher("$ 123,220");
+			while (matcher.find()) {
+				String match = matcher.group();
+				assertEquals("123,220", match);
+			}
+		}
+		
+		{
+			Matcher matcher = Pattern.compile(doubleRegexNoE).matcher("$ 1,234.23");
+			while (matcher.find()) {
+				String match = matcher.group();
+				assertEquals("1,234.23", match);
+			}
 		}
 	}
 }

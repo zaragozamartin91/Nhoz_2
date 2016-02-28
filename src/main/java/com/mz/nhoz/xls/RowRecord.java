@@ -65,9 +65,16 @@ public class RowRecord {
 		return this.valueMap.values();
 	}
 
+	/**
+	 * Retorna un objeto de la fila.
+	 * 
+	 * @param cellLabel - Id de columna.
+	 * @return objeto de la fila.
+	 */
 	public Object get(String cellLabel) {
 		return this.valueMap.get(cellLabel);
 	}// get
+	
 
 	public String toString() {
 		return new Gson().toJson(this.valueMap);
